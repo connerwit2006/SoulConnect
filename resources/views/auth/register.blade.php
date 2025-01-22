@@ -39,6 +39,15 @@
             <x-input-error :messages="$errors->get('lookingforgender')" class="mt-2" />
         </div>
         <div class="mt-2">
+            <x-input-label for="relationshiptype" :value="__('Relatie waar je voor open staat')" />
+            <select id="relationshiptype" name="relationship_type" class="form-select block mt-1 w-full text-gray-600" required>
+                <option value="" selected disabled>{{ __('Kies een relatietype') }}</option>
+                <option value="friendly" {{ old('relationship_type') == 'friendly' ? 'selected' : '' }}>{{ __('Vriendelijk') }}</option>
+                <option value="romantic" {{ old('relationship_type') == 'romantic' ? 'selected' : '' }}>{{ __('Romantisch') }}</option>
+            </select>
+            <x-input-error :messages="$errors->get('relationship_type')" class="mt-2" />
+        </div>
+        <div class="mt-2">
             <x-input-label for="dob" :value="__('Geboortedatum')" />
             <x-text-input id="dob" class="block mt-1 w-full" type="date" name="dob" :value="old('dob')" required />
             <x-input-error :messages="$errors->get('dob')" class="mt-2" />
