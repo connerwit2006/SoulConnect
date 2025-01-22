@@ -11,23 +11,19 @@
         </div>
 
         <!-- Gender -->
-        <div class="mt-4">
-            <x-input-label for="gender" :value="__('Geslacht')" />
-            <div class="flex items-center mt-2">
-                <!-- Optie man -->
-                <label for="male" class="inline-flex items-center">
-                    <input id="male" type="radio" name="gender" value="male" class="form-radio text-indigo-600" {{ old('gender') == 'male' ? 'checked' : '' }}>
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Man') }}</span>
-                </label>
+        <!-- Gender -->
+<div class="mt-4">
+    <x-input-label for="gender" :value="__('Geslacht')" />
+    <div class="mt-2">
+        <select id="gender" name="gender" class="form-select block mt-1 w-full text-gray-600" required>
+            <option value="" disabled selected hidden selected>{{ __('Kies uw Geslacht') }}</option>
+            <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>{{ __('Man') }}</option>
+            <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>{{ __('Vrouw') }}</option>
+        </select>
+    </div>
+    <x-input-error :messages="$errors->get('gender')" class="mt-2" />
+</div>
 
-                <!-- Optie vrouw -->
-                <label for="female" class="inline-flex items-center ml-4">
-                    <input id="female" type="radio" name="gender" value="female" class="form-radio text-indigo-600" {{ old('gender') == 'female' ? 'checked' : '' }}>
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Vrouw') }}</span>
-                </label>
-            </div>
-            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
-        </div>
 
         <!-- Geboortedatum -->
         <div class="mt-4">
@@ -68,7 +64,7 @@
 
         <!-- Registratie knop -->
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 href="{{ route('login') }}">
                 {{ __('Al Geregistreerd?') }}
             </a>
