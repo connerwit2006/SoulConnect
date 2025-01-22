@@ -19,7 +19,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('pages.register');
+        return view('auth.register');
     }
 
     /**
@@ -44,7 +44,7 @@ class RegisteredUserController extends Controller
             'postcode' => ['required', 'string', 'max:255'],
             'relationshiptype' => ['required', 'string', 'max:255'],
             'terms' => ['required', 'accepted'],
-        ]);        
+        ]);
 
         $validated['terms'] = $request->has('terms') ? true : false;
 
@@ -56,8 +56,8 @@ class RegisteredUserController extends Controller
             'oneliner' => $request->oneliner,
             'appreciate' => $request->appreciate,
             'lookingfor' => $request->lookingfor,
-            'facecard' => $request->hasFile('facecard') 
-                ? $request->file('facecard')->store('facecards', 'public') 
+            'facecard' => $request->hasFile('facecard')
+                ? $request->file('facecard')->store('facecards', 'public')
                 : null,
             'gender' => $request->gender,
             'lookingforgender' => $request->lookingforgender,
