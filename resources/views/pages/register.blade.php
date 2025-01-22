@@ -9,7 +9,7 @@
 
 <body>
     <h1>Register</h1>
-    <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('storeUser') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div>
             <label for="name">Name:</label>
@@ -37,7 +37,7 @@
         </div>
         <div>
             <label for="oneliner">One-liner:</label>
-            <input type="text" id="oneliner" name="oneliner" required>
+            <input type="text" id="oneliner" name="one_liner" required>
         </div>
         <div>
             <label for="appreciate">Appreciate:</label>
@@ -45,11 +45,11 @@
         </div>
         <div>
             <label for="lookingfor">Looking for:</label>
-            <input type="text" id="lookingfor" name="lookingfor" required>
+            <input type="text" id="lookingfor" name="looking_for" required>
         </div>
         <div>
             <label for="facecard">Facecard:</label>
-            <input type="file" id="facecard" name="facecard">
+            <input type="file" id="facecard" name="face_card">
         </div>
         <div>
             <label for="gender">Gender:</label>
@@ -60,7 +60,7 @@
         </div>
         <div>
             <label for="lookingforgender">Looking for Gender:</label>
-            <select id="lookingforgender" name="lookingforgender" required>
+            <select id="lookingforgender" name="looking_for_gender" required>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
             </select>
@@ -75,7 +75,11 @@
         </div>
         <div>
             <label for="relationshiptype">Relationship Type:</label>
-            <input type="text" id="relationshiptype" name="relationshiptype" required>
+            <select id="relationshiptype" name="relationship_type" required>
+                <option selected disabled>Kies een relatietype</option>
+                <option value="friendly">Vriendelijk</option>
+                <option value="romantic">Romantisch</option>
+            </select>
         </div>
         <div>
             <label>

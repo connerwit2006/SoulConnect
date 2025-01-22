@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
 {
-    public function sendVerificationEmail() 
+    public function sendVerificationEmail($user) 
     {
-        $userName = 'John Doe';
-        $userEmail = 'John@Doe.com';
+        $userName = $user->name;
+        $userEmail = $user->email;
 
         Mail::send('mails.verifyEmail', ['userName' => $userName], function ($message) use ($userEmail) {
             $message->to($userEmail);
@@ -23,10 +23,13 @@ class MailController extends Controller
 
     public function verifyEmail(Request $request) 
     {
-        dd('Email Verified');
-        // $user = $request->user();
-        // $user->markEmailAsVerified();
-        // return redirect('/dashboard');
+        // dd('Email Verified');
+        $user = $request->user();
+        $user->email_verified = true;
+
+        // dd($user);
+
+        $user->update();
 
         return redirect(route('dashboard'))->with('message', 'Email Verified!');
     }

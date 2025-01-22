@@ -10,6 +10,7 @@
     Hello world! Hello world!
 </h1>
 
+<a href="{{ route('register') }}">Registreer hier</a>
 
 </body>
 </html>
