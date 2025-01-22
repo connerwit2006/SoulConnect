@@ -10,3 +10,4 @@ Een eenvoudig platform gericht op de Nederlandse markt, waar gebruikers vanaf 18
 Een demo met testdata is beschikbaar, inclusief uitgebreide privacyopties en optionele webcamverificatie.
 
 # SoulConnect
+
