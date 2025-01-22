@@ -61,7 +61,7 @@ class RegisteredUserController extends Controller
                 : null,
             'gender' => $request->gender,
             'lookingforgender' => $request->lookingforgender,
-            'birthdate' => $request->birthdate,
+            'dob' => $request->dob,
             'postcode' => $request->postcode,
             'relationshiptype' => $request->relationshiptype,
             'terms' => $request->terms,

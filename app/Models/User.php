@@ -57,4 +57,43 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function calculateMatchScore(User $user)
+    {
+        $score = 0;
+        $distance = 0;
+
+        //gender match
+        if($this->lookingforgender == $user->gender) {
+            $score += 5;
+        }
+
+        //reltionship match
+        if($this->relationshiptype == $user->relationshiptype) {
+            $score += 3;
+        }
+
+        //location match
+        if($distance <= 30) {
+            $score += 2;
+        } else {
+            $score += 1;
+        }
+
+        return $score;
+    }
+
+    //distance calculation WIP
+    public function calculateDistance(){
+        //hardcoded zipcodes, will be replaced with user input
+        $zip1 = "1000 AB";
+        $zip2 = "2000 CD";
+
+        $val1 = intval($zip1);
+        $val2 = intval($zip2);
+
+        $distance = $val1 - $val2;
+
+        return $distance;
+    }
 }
