@@ -1,5 +1,5 @@
 <x-guest-layout>
-      <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="mt-2">
@@ -8,8 +8,8 @@
                 autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
-           <!-- Facecard -->
-           <div class="mt-2">
+        <!-- Facecard -->
+        <div class="mt-2">
             <x-input-label for="facecard" :value="__('Upload een profielfoto')" />
             <input id="facecard" class="block mt-1 w-full text-gray-600" type="file" name="facecard" />
             <x-input-error :messages="$errors->get('facecard')" class="mt-2" />
@@ -43,8 +43,8 @@
             <x-text-input id="dob" class="block mt-1 w-full" type="date" name="dob" :value="old('dob')" required />
             <x-input-error :messages="$errors->get('dob')" class="mt-2" />
         </div>
-         <!-- Nickname -->
-         <div class="mt-2">
+        <!-- Nickname -->
+        <div class="mt-2">
             <x-input-label for="nickname" :value="__('Bijnaam')" />
             <x-text-input id="nickname" class="block mt-1 w-full" type="text" name="nickname" :value="old('nickname')"
                 required autofocus autocomplete="nickname" />
@@ -57,14 +57,14 @@
                 autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
-        
-            <!-- Postcode -->
-            <div class="mt-2">
-                <x-input-label for="postcode" :value="__('Postcode')" />
-                <x-text-input id="postcode" class="block mt-1 w-full" type="text" name="postcode" :value="old('postcode')"
-                    required />
-                <x-input-error :messages="$errors->get('postcode')" class="mt-2" />
-            </div>
+
+        <!-- Postcode -->
+        <div class="mt-2">
+            <x-input-label for="postcode" :value="__('Postcode')" />
+            <x-text-input id="postcode" class="block mt-1 w-full" type="text" name="postcode" :value="old('postcode')"
+                required />
+            <x-input-error :messages="$errors->get('postcode')" class="mt-2" />
+        </div>
         <!-- Password -->
         <div class="mt-2">
             <x-input-label for="password" :value="__('Wachtwoord')" />
@@ -80,23 +80,17 @@
                 name="password_confirmation" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
-       
-        <!-- One-liner -->
+
+
         <div class="mt-2">
-            <x-input-label for="oneliner" :value="__('One-liner')" />
-            <x-text-input id="oneliner" class="block mt-1 w-full" type="text" name="oneliner" :value="old('oneliner')"
-                required />
-            <x-input-error :messages="$errors->get('oneliner')" class="mt-2" />
-        </div>
-        <div class="mt-2">
-            <x-input-label for="appreciate" :value="__('Appreciate')" />
+            <x-input-label for="appreciate" :value="__('Waarderen in een relatie')" />
             <x-text-input id="appreciate" class="block mt-1 w-full" type="text" name="appreciate"
                 :value="old('appreciate')" required />
             <x-input-error :messages="$errors->get('appreciate')" class="mt-2" />
         </div>
         <!-- Looking for -->
         <div class="mt-2">
-            <x-input-label for="lookingfor" :value="__('Looking For')" />
+            <x-input-label for="lookingfor" :value="__('Wat zoek je in een partner?')" />
             <x-text-input id="lookingfor" class="block mt-1 w-full" type="text" name="lookingfor"
                 :value="old('lookingfor')" required />
             <x-input-error :messages="$errors->get('lookingfor')" class="mt-2" />
@@ -104,7 +98,7 @@
 
         <!-- Relationship Type -->
         <div class="mt-2">
-            <x-input-label for="relationshiptype" :value="__('Relationship Type')" />
+            <x-input-label for="relationshiptype" :value="__('Relatie waar je voor open staat')" />
             <x-text-input id="relationshiptype" class="block mt-1 w-full" type="text" name="relationshiptype"
                 :value="old('relationshiptype')" required />
             <x-input-error :messages="$errors->get('relationshiptype')" class="mt-2" />
