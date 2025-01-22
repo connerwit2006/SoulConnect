@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('facecard')->nullable();
             $table->enum('gender', ['male', 'female']);
             $table->enum('lookingforgender', ['male', 'female']);
-            $table->date('dob')->nullable();
+            $table->date('dob');
             $table->string('postcode');
             $table->string('relationshiptype');
             $table->boolean('terms')->default(false);
