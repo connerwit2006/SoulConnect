@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('storeUser') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="mt-2">
@@ -28,24 +28,31 @@
         </div>
         <!-- Looking for Gender -->
         <div class="mt-2">
-            <x-input-label for="lookingforgender" :value="__('Voorkeur geslacht')" />
-            <select id="lookingforgender" name="lookingforgender" class="form-select block mt-1 w-full text-gray-600"
+            <x-input-label for="looking_for_gender" :value="__('Voorkeur geslacht')" />
+            <select id="looking_for_gender" name="looking_for_gender" class="form-select block mt-1 w-full text-gray-600"
                 required>
                 <option value="" disabled selected hidden>{{ __('Kies uw voorkeur') }}</option>
-                <option value="male" {{ old('lookingforgender') == 'male' ? 'selected' : '' }}>{{ __('Man') }}</option>
-                <option value="female" {{ old('lookingforgender') == 'female' ? 'selected' : '' }}>{{ __('Vrouw') }}
+                <option value="male" {{ old('looking_for_gender') == 'male' ? 'selected' : '' }}>{{ __('Man') }}</option>
+                <option value="female" {{ old('looking_for_gender') == 'female' ? 'selected' : '' }}>{{ __('Vrouw') }}
                 </option>
             </select>
-            <x-input-error :messages="$errors->get('lookingforgender')" class="mt-2" />
+            <x-input-error :messages="$errors->get('looking_for_gender')" class="mt-2" />
         </div>
         <div class="mt-2">
-            <x-input-label for="relationshiptype" :value="__('Relatie waar je voor open staat')" />
-            <select id="relationshiptype" name="relationship_type" class="form-select block mt-1 w-full text-gray-600" required>
+            <x-input-label for="relationship_type" :value="__('Relatie waar je voor open staat')" />
+            <select id="relationship_type" name="relationship_type" class="form-select block mt-1 w-full text-gray-600" required>
                 <option value="" selected disabled>{{ __('Kies een relatietype') }}</option>
                 <option value="friendly" {{ old('relationship_type') == 'friendly' ? 'selected' : '' }}>{{ __('Vriendelijk') }}</option>
                 <option value="romantic" {{ old('relationship_type') == 'romantic' ? 'selected' : '' }}>{{ __('Romantisch') }}</option>
             </select>
             <x-input-error :messages="$errors->get('relationship_type')" class="mt-2" />
+        </div>
+         <!-- One-liner -->
+         <div class="mt-2">
+            <x-input-label for="one_liner" :value="__('One liner')" />
+            <x-text-input id="one_liner" class="block mt-1 w-full" type="text" name="one_liner" :value="old('one_liner')"
+                required />
+            <x-input-error :messages="$errors->get('one_liner')" class="mt-2" />
         </div>
         <div class="mt-2">
             <x-input-label for="dob" :value="__('Geboortedatum')" />
@@ -99,10 +106,10 @@
         </div>
         <!-- Looking for -->
         <div class="mt-2">
-            <x-input-label for="lookingfor" :value="__('Wat zoek je in een partner?')" />
-            <x-text-input id="lookingfor" class="block mt-1 w-full" type="text" name="lookingfor"
-                :value="old('lookingfor')" required />
-            <x-input-error :messages="$errors->get('lookingfor')" class="mt-2" />
+            <x-input-label for="looking_for" :value="__('Wat zoek je in een partner?')" />
+            <x-text-input id="looking_for" class="block mt-1 w-full" type="text" name="looking_for"
+                :value="old('looking_for')" required />
+            <x-input-error :messages="$errors->get('looking_for')" class="mt-2" />
         </div>
 
         <!-- Relationship Type -->
