@@ -28,7 +28,7 @@
         </div>
         <!-- Looking for Gender -->
         <div class="mt-2">
-            <x-input-label for="lookingforgender" :value="__('Looking For Gender')" />
+            <x-input-label for="lookingforgender" :value="__('Voorkeur geslacht')" />
             <select id="lookingforgender" name="lookingforgender" class="form-select block mt-1 w-full text-gray-600"
                 required>
                 <option value="" disabled selected hidden>{{ __('Kies uw voorkeur') }}</option>
