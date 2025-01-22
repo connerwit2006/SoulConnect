@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
+use App\Http\Controllers\MailController;
 
 class RegisteredUserController extends Controller
 {
@@ -29,48 +30,38 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $formFields = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults(), 'min:16'],
             'nickname' => ['required', 'string', 'max:255'],
-            'oneliner' => ['required', 'string', 'max:255'],
+            'one_liner' => ['required', 'string', 'max:255'],
             'appreciate' => ['required', 'string', 'max:255'],
-            'lookingfor' => ['required', 'string', 'max:255'],
+            'looking_for' => ['required', 'string', 'max:255'],
             'facecard' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'gender' => ['required'],
-            'lookingforgender' => ['required'],
+            'looking_for_gender' => ['required'],
             'dob' => ['required', 'date', 'before:-18 years'],
             'postcode' => ['required', 'string', 'max:255'],
-            'relationshiptype' => ['required', 'string', 'max:255'],
+            'relationship_type' => ['required', 'string', 'max:255'],
             'terms' => ['required', 'accepted'],
         ]);        
 
-        $validated['terms'] = $request->has('terms') ? true : false;
+        $formFields['terms'] = $request->has('terms') ? true : false;
+        $formFields['password'] = Hash::make($formFields['password']);
+        $formFields['facecard'] = $request->hasFile('facecard') 
+            ? $request->file('facecard')->store('facecards', 'public') 
+            : null;
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'nickname' => $request->nickname,
-            'oneliner' => $request->oneliner,
-            'appreciate' => $request->appreciate,
-            'lookingfor' => $request->lookingfor,
-            'facecard' => $request->hasFile('facecard') 
-                ? $request->file('facecard')->store('facecards', 'public') 
-                : null,
-            'gender' => $request->gender,
-            'lookingforgender' => $request->lookingforgender,
-            'dob' => $request->dob,
-            'postcode' => $request->postcode,
-            'relationshiptype' => $request->relationshiptype,
-            'terms' => $request->terms,
-        ]);
+        $user = User::create($formFields);
+
+        $mailController = new MailController();
+        $mailController->sendVerificationEmail($user);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('dashboard'))->with('message', 'User registered!');
     }
 }
