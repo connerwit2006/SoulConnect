@@ -17,6 +17,18 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('nickname');
+            $table->string('oneliner');
+            $table->string('appreciate');
+            $table->string('lookingfor');
+            $table->string('facecard')->nullable();
+            $table->enum('gender', ['male', 'female']);
+            $table->enum('lookingforgender', ['male', 'female']);
+            $table->date('dob')->nullable();
+            $table->string('postcode');
+            $table->string('relationshiptype');
+            $table->boolean('terms')->default(false);
+            $table->boolean('email_verified')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
