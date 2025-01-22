@@ -36,8 +36,8 @@ class RegisteredUserController extends Controller
             'nickname' => ['required', 'string', 'max:255'],
             'oneliner' => ['required', 'string', 'max:255'],
             'appreciate' => ['required', 'string', 'max:255'],
-            'lookingfor' => ['required', 'string', 'max:255'],
-            'facecard' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'looking_for' => ['required', 'string', 'max:255'],
+            'face_card' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'gender' => ['required'],
             'lookingforgender' => ['required'],
             'dob' => ['required', 'date', 'before:-18 years'],
@@ -46,26 +46,16 @@ class RegisteredUserController extends Controller
             'terms' => ['required', 'accepted'],
         ]);        
 
-        $validated['terms'] = $request->has('terms') ? true : false;
+        $formFields['terms'] = $request->has('terms') ? true : false;
+        $formFields['password'] = Hash::make($formFields['password']);
+        $formFields['face_card'] = $request->hasFile('face_card') 
+            ? $request->file('face_card')->store('face_cards', 'public') 
+            : null;
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'nickname' => $request->nickname,
-            'oneliner' => $request->oneliner,
-            'appreciate' => $request->appreciate,
-            'lookingfor' => $request->lookingfor,
-            'facecard' => $request->hasFile('facecard') 
-                ? $request->file('facecard')->store('facecards', 'public') 
-                : null,
-            'gender' => $request->gender,
-            'lookingforgender' => $request->lookingforgender,
-            'dob' => $request->dob,
-            'postcode' => $request->postcode,
-            'relationshiptype' => $request->relationshiptype,
-            'terms' => $request->terms,
-        ]);
+        $user = User::create($formFields);
+
+        $mailController = new MailController();
+        $mailController->sendVerificationEmail($user);
 
         event(new Registered($user));
 
