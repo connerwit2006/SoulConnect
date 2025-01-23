@@ -1,4 +1,12 @@
 <x-guest-layout>
+
+    <!-- Sign-in Greet -->
+    <div class="text-center mb-10">
+        <h1 class="text-3xl font-bold text-gray-900">Word lid van SoulConnect!</h1>
+        <p class="text-md text-gray-700 mt-4">Maak een account aan en start je reis naar nieuwe connecties.</p>
+    </div>
+
+    <form method="POST" action="{{ route('register') }}">
     <form action="{{ route('storeUser') }}" method="POST" enctype="multipart/form-data">
         @csrf
 

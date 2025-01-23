@@ -15,13 +15,18 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans text-gray-900 antialiased">
+
         <!-- Navbar -->
         <x-navbar/>
 
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-bg1">
+        <div class="min-h-screen flex flex-col sm:justify-start items-center pt-6 sm:pt-20 bg-bg1">
             <div class="w-full max-w-sm sm:max-w-md mt-6 px-6 py-4 bg-bg2 shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
             </div>
         </div>
+
+        <!-- Footer -->
+        <x-footer/>
+
     </body>
 </html>
