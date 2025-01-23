@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\View\View;
+use App\Models\BlockedUser;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\MailController;
+use App\Http\Requests\Auth\LoginRequest;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -24,6 +27,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        $userId = User::where('email', $request->email)->first()->id;
+        $isBlocked = BlockedUser::where('blocked_user_id', $userId)->exists();
+
+        if ($isBlocked) {
+            $mailController = new MailController();
+            $mailController->sendBlockedUserLoginAttemptMail($request->email);
+
+            return redirect()->route('userBlocked')->with('error', 'Your account has been blocked.');
+        }
+
         $request->authenticate();
 
         $request->session()->regenerate();

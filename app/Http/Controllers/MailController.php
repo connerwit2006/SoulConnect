@@ -33,4 +33,14 @@ class MailController extends Controller
 
         return redirect(route('dashboard'))->with('message', 'Email Verified!');
     }
+
+    public function sendBlockedUserLoginAttemptMail($email) 
+    {
+        Mail::send('mails.blockedUserLoginAttempt', [], function ($message) use ($email) {
+            $message->to($email);
+            $message->subject('Login Attempt');
+        });
+
+        return redirect(route('dashboard'))->with('message', 'Blocked User Login Attempt Mail Sent!');
+    }
 }

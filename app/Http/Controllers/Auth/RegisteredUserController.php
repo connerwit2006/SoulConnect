@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 use App\Http\Controllers\MailController;
+use App\Models\BlockedUser;
 
 class RegisteredUserController extends Controller
 {
@@ -63,5 +64,54 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect(route('dashboard'))->with('message', 'User registered!');
+    }
+
+    // Fetch Users List
+    public function fetchUsersList(): View
+    {
+        $users = User::where('id', '!=', Auth::id())->get();
+        $blockedStatuses = [];
+
+        foreach ($users as $user) {
+            $blockedStatuses[$user->id] = BlockedUser::where('blocked_user_id', $user->id)->exists();
+        }
+
+        return view('pages.users-list')->with([
+            'users' => $users,
+            'blockedStatuses' => $blockedStatuses
+        ]);
+    }
+
+    // Show Blocked Page
+    public function showUserBlockedPage()
+    {
+        return view('pages.user-blocked');
+    }
+
+    // Block User
+    public function blockUser($id): RedirectResponse
+    {
+        // dd($id);
+        $user = User::find($id);
+
+        // dd($user->id, Auth::id());
+
+        $formFields = [
+            'blocked_user_id' => $user->id,
+            'blocked_by_user_id' => Auth::id()
+        ];
+
+        BlockedUser::create($formFields);
+
+        return redirect(route('usersList'))->with('message', 'User blocked!');
+    }
+
+    public function unblockUser($id): RedirectResponse
+    {
+        $user = User::find($id);
+
+        BlockedUser::where('blocked_user_id', $user->id)->delete();
+
+        return redirect(route('usersList'))->with('message', 'User unblocked!');
     }
 }

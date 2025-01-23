@@ -11,6 +11,7 @@
 </h1>
 
 <a href="{{ route('register') }}">Registreer hier</a>
+<a href="{{ route('login') }}">Log hier in</a>
 
 </body>
 </html>

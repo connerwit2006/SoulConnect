@@ -31,4 +31,16 @@ Route::get('/send-verification-email', [MailController::class, 'sendVerification
 // User Email Verification
 Route::get('/email/verify', [MailController::class, 'verifyEmail'])->name('verifyEmail');
 
+// Get Users List
+Route::get('/users/list', [RegisteredUserController::class, 'fetchUsersList'])->name('usersList');
+
+// Show User Blocked Page
+Route::get('/user/blocked', [RegisteredUserController::class, 'showUserBlockedPage'])->name('userBlocked');
+
+// Block User
+Route::get('/block/user/{id}', [RegisteredUserController::class, 'blockUser'])->middleware('auth')->name('blockUser');
+
+// Unblock User
+Route::get('/unblock/user/{id}', [RegisteredUserController::class, 'unBlockUser'])->middleware('auth')->name('unblockUser');
+
 require __DIR__.'/auth.php';

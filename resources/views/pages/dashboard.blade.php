@@ -3,6 +3,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
         </h2>
+        <a href="{{ route('usersList') }}">Ga hier naar users list</a>
     </x-slot>
 
     <div class="py-12">
