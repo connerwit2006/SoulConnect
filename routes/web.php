@@ -9,7 +9,6 @@ use App\Http\Controllers\MatchingController;
 
 Route::get('/', function () {
     return view('pages.welcome');
-    Route::get('/matches', [MatchingController::class, 'findMatches']);
 });
 
 Route::get('/dashboard', function () {
@@ -35,5 +34,7 @@ Route::get('/send-verification-email', [MailController::class, 'sendVerification
 // User Email Verification
 Route::get('/email/verify', [MailController::class, 'verifyEmail'])->name('verifyEmail');
 
+Route::get('/matches', [MatchingController::class, 'findMatches']);
+Route::get('/topmatches', [MatchingController::class, 'findTopMatches']);
 
 require __DIR__.'/auth.php';

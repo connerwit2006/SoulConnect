@@ -8,56 +8,18 @@ use App\Models\User;
 class MatchingController extends Controller
 {
     /**
-     * Get coordinates for a given postcode using Nominatim API.
+     * Calculate the distance between two postcodes using the new template.
      */
-    private function getCoordinates($postcode){
-        $url = "https://nominatim.openstreetmap.org/search?postalcode=" . urlencode($postcode) . "&country=Netherlands&format=json";
-
-        $options = [
-            'http' => [
-                'header' => "User-Agent: soulconnect (cra.wit.2006@gmail.com)\r\n"
-            ]
-        ];
-
-        $context = stream_context_create($options);
-        $response = @file_get_contents($url, false, $context);
-
-        if ($response === false) {
-            return null; // Handle failure gracefully
-        }
-
-        $data = json_decode($response, true);
-
-        if (count($data) > 0) {
-            return [$data[0]['lat'], $data[0]['lon']];
-        }
-
-        return null;
-}
-
-
-    /**
-     * Calculate the distance between two coordinates using the Haversine formula.
-     */
-    private function calculateDistance($coords1, $coords2)
+    private function calculateDistance($postcode1, $postcode2)
     {
-        $earthRadius = 6371; // radius in km
+        // Remove the spaces from postcodes and convert them to integers
+        $code1 = intval(str_replace(' ', '', $postcode1));
+        $code2 = intval(str_replace(' ', '', $postcode2));
 
-        $lat1 = deg2rad($coords1[0]);
-        $lon1 = deg2rad($coords1[1]);
-        $lat2 = deg2rad($coords2[0]);
-        $lon2 = deg2rad($coords2[1]);
+        // Calculate the absolute difference between the two integer postcodes
+        $distance = abs($code1 - $code2);
 
-        $dLat = $lat2 - $lat1;
-        $dLon = $lon2 - $lon1;
-
-        $a = sin($dLat / 2) * sin($dLat / 2) +
-             cos($lat1) * cos($lat2) *
-             sin($dLon / 2) * sin($dLon / 2);
-
-        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
-
-        return $earthRadius * $c; // distance in km
+        return $distance;
     }
 
     /**
@@ -68,62 +30,90 @@ class MatchingController extends Controller
         $score = 0;
 
         // Gender Match
-        if ($user->lookingforgender === $otherUser->gender) {
-            $score += 50; // Add 50 points for matching preferred gender
+        if ($user->looking_for_gender === $otherUser->gender) {
+            $score += 80; // Add 50 points for matching preferred gender
         }
 
         // Relationship Type Match
-        if ($user->relationshiptype === $otherUser->relationshiptype) {
-            $score += 30; // Add 30 points for matching relationship type
+        if ($user->relationship_type === $otherUser->relationship_type) {
+            $score += 50; // Add 30 points for matching relationship type
         }
 
         // Location Match using distance
-        $userCoords = $this->getCoordinates($user->postcode);
-        $otherUserCoords = $this->getCoordinates($otherUser->postcode);
+        $distance = $this->calculateDistance($user->postcode, $otherUser->postcode);
 
-        if ($userCoords && $otherUserCoords) {
-            $distance = $this->calculateDistance($userCoords, $otherUserCoords);
-
-            // Add points based on proximity (closer distances = higher points)
-            if ($distance <= 10) {
-                $score += 20; // Very close
-            } elseif ($distance <= 50) {
-                $score += 10; // Close
-            }
+        // Add points based on proximity (closer distances = higher points)
+        if ($distance < 1000) {
+            $score += 50;
+        } elseif ($distance < 2000) {
+            $score += 40;
+        } elseif ($distance < 3000) {
+            $score += 30;
+        } elseif ($distance < 4000) {
+            $score += 20;
+        } elseif ($distance < 5000) {
+            $score += 10;
         }
-
         return $score;
     }
 
     /*
      * Find and return matches for the logged in user.
     */
-    public function findMatches(Request $request){
+    public function findMatches(Request $request)
+    {
         $userId = $request->user()->id;
         $user = User::findOrFail($userId);
 
         // Filter potential matches
-        $otherUsers = User::where('id', '!=', $userId)
-            ->where('gender', $user->lookingforgender)
-            ->where('relationshiptype', $user->relationshiptype)
-            ->get();
+        $otherUsers = User::where('id', '!=', $userId)->get();
 
         // Calculate match scores and format output
         $matches = $otherUsers->map(function ($otherUser) use ($user) {
             $matchScore = $this->calculateMatchScore($user, $otherUser);
 
             return [
-                'facecard' => $otherUser->facecard, // Image or null
+                'facecard' => $otherUser->face_card, // Image or null
                 'nickname' => $otherUser->nickname,
-                'oneliner' => $otherUser->oneliner,
+                'oneliner' => $otherUser->one_liner,
                 'score' => $matchScore,
             ];
         });
 
-        // Sort matches by score in descending order
+        // Sort matches by score in ascending order (lower scores first) exclude the first 5 matches
+        $sortedMatches = $matches->sortByDesc('score')->slice(5);
+
+        // Pass only relevant data to the view
+        //dd($sortedMatches);
+        return view('pages.matches', ['matches' => $sortedMatches]);
+    }
+
+    //function to find the top FIVE matches
+    public function findTopMatches(Request $request)
+    {
+        $userId = $request->user()->id;
+        $user = User::findOrFail($userId);
+
+        // Filter potential matches
+        $otherUsers = User::where('id', '!=', $userId)->get();
+
+        // Calculate match scores and format output
+        $matches = $otherUsers->map(function ($otherUser) use ($user) {
+            $matchScore = $this->calculateMatchScore($user, $otherUser);
+
+            return [
+                'facecard' => $otherUser->face_card, // Image or null
+                'nickname' => $otherUser->nickname,
+                'oneliner' => $otherUser->one_liner,
+                'score' => $matchScore,
+            ];
+        });
+
+        // Sort matches by score in ascending order (lower scores first)
         $sortedMatches = $matches->sortByDesc('score')->values();
 
         // Pass only relevant data to the view
-        return view('pages.matches', ['matches' => $sortedMatches]);
+        //dd($sortedMatches);
+        return view('pages.topmatches', ['matches' => $sortedMatches->take(5)]);
     }
 }
