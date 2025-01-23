@@ -1,4 +1,4 @@
-<header class="bg-white relative">
+<header class="w-full bg-white relative">
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="flex h-20 items-center justify-between">
             <!-- Logo -->
@@ -8,35 +8,37 @@
 
             <!-- Desktop Navigation -->
             <div x-data="{ open: false, loggedIn: @json(auth()->check()) }" class="md:flex md:items-center md:gap-12">
-                <nav class="hidden md:block">
-                    <ul class="flex items-center gap-8 text-md text-gray-700 tracking-wider">
-                        <li><a class="hover:text-accent" href="#">Berichten</a></li>
-                        <li><a class="hover:text-accent" href="#">Matches</a></li>
-                        <li><a class="hover:text-accent" href="#">Likes</a></li>
-                        <li><a class="hover:text-accent" href="#">Dashboard</a></li>
-                    </ul>
+                <nav class="hidden lg:block">
+                    <div class="flex flex-row">
+                        <ul class="flex items-center gap-8 text-md text-gray-700 tracking-wider">
+                            <li><a class="hover:text-accent" href="#">Berichten</a></li>
+                            <li><a class="hover:text-accent" href="#">Matches</a></li>
+                            <li><a class="hover:text-accent" href="#">Likes</a></li>
+                            <li><a class="hover:text-accent" href="#">Dashboard</a></li>
+                        </ul>
+
+                        <!-- Desktop Login/Sign-in Buttons -->
+                        <div class="hidden md:flex md:gap-4 text-sm font-medium text-white tracking-widest uppercase">
+                            <!-- Show Login/Signup =! logged-in -->
+                            <template x-if="!loggedIn">
+                                <div class="flex gap-4">
+                                    <a class="rounded-md bg-accent px-5 py-2 shadow hover:scale-105 transition-transform ml-4" href="#">Login</a>
+                                    <a class="rounded-md bg-accent px-5 py-2 shadow hover:scale-105 transition-transform" href="#">Register</a>
+
+                                    <!-- TEST -->
+                                    <button class="bg-red-500" @click="loggedIn = true">Simuleer Login</button>
+                                </div>
+                            </template>
+
+                            <template x-if="loggedIn">
+                                <a :href="`/profile/${user.id}`" class="ml-4 bg-accent px-5 py-2 rounded-md text-white">Mijn Profiel</a>
+                            </template>
+                        </div>
+                    </div>
                 </nav>
 
-                <!-- Desktop Login/Sign-in Buttons -->
-                <div class="hidden md:flex md:gap-4 text-sm font-medium text-white tracking-widest uppercase">
-                    <!-- Show Login/Signup =! logged-in -->
-                    <template x-if="!loggedIn">
-                        <div class="flex gap-4">
-                            <a class="rounded-md bg-accent px-5 py-2 shadow hover:scale-105 transition-transform" href="#">Login</a>
-                            <a class="rounded-md bg-accent px-5 py-2 shadow hover:scale-105 transition-transform" href="#">Register</a>
-
-                            <!-- TEST -->
-                            <button class="bg-red-500" @click="loggedIn = true">Simuleer Login</button>
-                        </div>
-                    </template>
-
-                    <template x-if="loggedIn">
-                        <a :href="`/profile/${user.id}`" class="bg-accent px-5 py-2 rounded-md text-white">Mijn Profiel</a>
-                    </template>
-                </div>
-
                 <!-- Mobile Hamburger Menu -->
-                <div class="block md:hidden">
+                <div class="block lg:hidden">
                     <button @click="open = !open" class="p-2 text-gray-700">
                         <!-- Hamburger SVG -->
                         <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-9 w-9">
@@ -52,7 +54,7 @@
 
                 <!-- Mobile Dropdown -->
                 <div x-show="open" @click.away="open = false"
-                     class="absolute top-full left-0 w-full bg-white shadow-md md:hidden z-10 transform origin-top"
+                     class="absolute top-full left-0 w-full bg-white shadow-md lg:hidden z-10 transform origin-top"
                      x-transition:enter="transition duration-300 ease-in-out"
                      x-transition:enter-start="scale-y-0 opacity-0"
                      x-transition:enter-end="scale-y-100 opacity-100"
