@@ -95,6 +95,11 @@
             <x-input-error class="mt-2" :messages="$errors->get('nickname')" />
         </div>
         <div>
+            <x-input-label for="postcode" :value="__('Postcode')" />
+            <x-text-input id="postcode" name="postcode" type="text" class="mt-1 block w-full" :value="old('postcode', $user->postcode)" required autofocus autocomplete="postcode" />
+            <x-input-error class="mt-2" :messages="$errors->get('postcode')" />
+        </div>
+        <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
