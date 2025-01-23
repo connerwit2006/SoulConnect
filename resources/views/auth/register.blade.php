@@ -98,6 +98,7 @@
         </div>
 
 
+
         <div class="mt-2">
             <x-input-label for="appreciate" :value="__('Waarderen in een relatie')" />
             <x-text-input id="appreciate" class="block mt-1 w-full" type="text" name="appreciate"
@@ -112,14 +113,6 @@
             <x-input-error :messages="$errors->get('looking_for')" class="mt-2" />
         </div>
 
-        <!-- Relationship Type -->
-        <div class="mt-2">
-            <x-input-label for="relationshiptype" :value="__('Relatie waar je voor open staat')" />
-            <x-text-input id="relationshiptype" class="block mt-1 w-full" type="text" name="relationshiptype"
-                :value="old('relationshiptype')" required />
-            <x-input-error :messages="$errors->get('relationshiptype')" class="mt-2" />
-        </div>
-
         <!-- Terms -->
         <div class="mt-2">
             <label class="inline-flex items-center">
@@ -129,10 +122,9 @@
             <x-input-error :messages="$errors->get('terms')" class="mt-2" />
         </div>
 
-        <!-- Register Button -->
-        <div class="flex items-center justify-end mt-2">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                href="{{ route('login') }}">
+        <!-- Registratie knop -->
+        <div class="flex items-center justify-end mt-4">
+            <a class="hover:underline text-sm text-gray-700 hover:text-gray-900 rounded-md focus:outline-none hover:scale-105 transition-transform" href="{{ route('login') }}">
                 {{ __('Al Geregistreerd?') }}
             </a>
 
