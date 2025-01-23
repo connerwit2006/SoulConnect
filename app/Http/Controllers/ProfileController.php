@@ -31,7 +31,17 @@ class ProfileController extends Controller
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
+        $user = Auth::user();
+    // Validate the request
+    $request->validate([
+        'one_liner' => ['required', 'string', 'max:255'],
+        
+        // Add other validation rules here
+    ]);
 
+    // Update the user's profile information
+    $user->one_liner = $request->input('one_liner');
+    // Update other fields here
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
