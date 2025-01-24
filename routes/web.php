@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/liked-by', [LikeController::class, 'likedBy'])->name('liked.by');
     Route::post('/like-back', [LikeController::class, 'likeBack'])->name('like.likeBack');
     Route::delete('/ignore', [LikeController::class, 'ignore'])->name('like.ignore');
+    Route::get('/liked-users', [LikeController::class, 'likedUsers'])->name('like.likedUsers');
+    Route::post('/like/remove', [LikeController::class, 'removeLike'])->name('like.remove');
 
 
     //match system routes

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Like;
 use App\Models\User;
 
 class MatchingController extends Controller
@@ -68,31 +69,34 @@ class MatchingController extends Controller
         // Filter potential matches
         $otherUsers = User::where('id', '!=', $userId)->get();
 
+        // Get the list of user IDs that the current user has already liked
+        $likedUserIds = Like::where('user_id', $userId)->pluck('liked_user_id')->toArray();
+
         // Calculate match scores and format output
-        $matches = $otherUsers->map(function ($otherUser) use ($user) {
+        $matches = $otherUsers->map(function ($otherUser) use ($user, $likedUserIds) {
             $matchScore = $this->calculateMatchScore($user, $otherUser);
 
             return [
+                'id' => $otherUser->id,
                 'facecard' => $otherUser->face_card, // Image or null
                 'nickname' => $otherUser->nickname,
                 'oneliner' => $otherUser->one_liner,
                 'score' => $matchScore,
+                'liked' => in_array($otherUser->id, $likedUserIds), // Check if the current user has liked this user
             ];
         });
 
-        // Sort matches by score in ascending order (lower scores first) exclude the first 5 matches
+        // Sort matches by score in descending order (higher scores first), exclude the first 5 matches
         $sortedMatches = $matches->sortByDesc('score')->slice(5);
         $paginatedMatches = $sortedMatches->forPage(request('page', 1), 10);
 
-        // Pass only relevant data to the view
-        //dd($sortedMatches);
         return view('pages.matches', [
             'matches' => $paginatedMatches,
             'totalPages' => ceil($matches->count() / 10), // To display page links
         ]);
     }
 
-    //function to find the top FIVE matches
+
     public function findTopMatches(Request $request)
     {
         $userId = $request->user()->id;
@@ -101,23 +105,27 @@ class MatchingController extends Controller
         // Filter potential matches
         $otherUsers = User::where('id', '!=', $userId)->get();
 
+        // Get the list of user IDs that the current user has already liked
+        $likedUserIds = Like::where('user_id', $userId)->pluck('liked_user_id')->toArray();
+
         // Calculate match scores and format output
-        $matches = $otherUsers->map(function ($otherUser) use ($user) {
+        $matches = $otherUsers->map(function ($otherUser) use ($user, $likedUserIds) {
             $matchScore = $this->calculateMatchScore($user, $otherUser);
 
             return [
+                'id' => $otherUser->id,
                 'facecard' => $otherUser->face_card, // Image or null
                 'nickname' => $otherUser->nickname,
                 'oneliner' => $otherUser->one_liner,
                 'score' => $matchScore,
+                'liked' => in_array($otherUser->id, $likedUserIds), // Check if the current user has liked this user
             ];
         });
 
-        // Sort matches by score in ascending order (lower scores first)
+        // Sort matches by score in descending order
         $sortedMatches = $matches->sortByDesc('score')->values();
 
-        // Pass only relevant data to the view
-        //dd($sortedMatches);
+        // Pass only the top 5 matches to the view
         return view('pages.topmatches', ['matches' => $sortedMatches->take(5)]);
     }
 }

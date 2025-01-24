@@ -12,6 +12,7 @@
                     <th>Nickname</th>
                     <th>One-Liner</th>
                     <th>Match Score</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,6 +24,13 @@
                         <td>{{ $match['nickname'] }}</td>
                         <td>{{ $match['oneliner'] }}</td>
                         <td><strong>{{ $match['score'] }}</strong></td>
+                        <td>
+                            @if ($match['liked'])
+                                <button class="btn btn-secondary" disabled>Liked</button>
+                            @else
+                                <button class="btn btn-success like-btn" data-user-id="{{ $match['id'] }}">Like</button>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -36,4 +44,37 @@
         </div>
     @endif
 </div>
+
+<script>
+    document.querySelectorAll('.like-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const userId = this.getAttribute('data-user-id');
+
+            // Send the like request
+            fetch("{{ route('like.interact') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                    liked_user_id: userId,
+                    action: 'like',
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    this.disabled = true;
+                    this.textContent = 'Liked';
+                } else {
+                    alert('Something went wrong.');
+                }
+            })
+            .catch(error => {
+                alert('Error: ' + error);
+            });
+        });
+    });
+</script>
 </x-app-layout>

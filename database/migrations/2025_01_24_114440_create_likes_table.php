@@ -10,8 +10,8 @@ class CreateLikesTable extends Migration
     {
         Schema::create('likes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // User performing the like
-            $table->unsignedBigInteger('liked_user_id'); // User being liked
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('liked_user_id');
             $table->enum('status', ['like', 'skip']);
             $table->timestamps();
 

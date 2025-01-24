@@ -76,9 +76,6 @@ class LikeController extends Controller
         return view('pages.liked_by', ['likedBy' => $likedBy]);
     }
 
-
-
-
     public function fetchProfiles()
     {
         $user = auth()->user();
@@ -139,5 +136,46 @@ class LikeController extends Controller
         }
 
         return response()->json(['success' => true]);
+    }
+
+    public function likedUsers()
+    {
+        $userId = auth()->id();
+
+        // Fetch users that the authenticated user has liked but exclude mutual likes
+        $likedUsers = User::whereHas('likesReceived', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })
+            ->whereDoesntHave('likesGiven', function ($query) use ($userId) {
+                $query->where('liked_user_id', $userId);
+            })
+            ->get();
+
+        return view('pages.liked_users', ['likedUsers' => $likedUsers]);
+    }
+
+    public function removeLike(Request $request)
+    {
+        $userId = auth()->id();
+        $likedUserId = $request->input('liked_user_id');
+
+        // Find and delete the like
+        $like = Like::where('user_id', $userId)
+            ->where('liked_user_id', $likedUserId)
+            ->first();
+
+        if ($like) {
+            $like->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Like removed successfully.',
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Like not found.',
+        ], 404);
     }
 }
