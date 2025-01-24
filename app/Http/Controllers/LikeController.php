@@ -64,17 +64,21 @@ class LikeController extends Controller
     {
         $userId = auth()->id();
 
-        // Fetch users who liked the authenticated user but exclude those whom the user has already liked
+        // Fetch users who liked the authenticated user, ordered by the like date (created_at)
         $likedBy = User::whereHas('likesGiven', function ($query) use ($userId) {
             $query->where('liked_user_id', $userId);
         })
             ->whereDoesntHave('likesReceived', function ($query) use ($userId) {
                 $query->where('user_id', $userId);
             })
+            ->with(['likesGiven' => function ($query) use ($userId) {
+                $query->where('liked_user_id', $userId)->orderBy('likes.created_at', 'desc'); // Order by created_at
+            }])
             ->get();
 
         return view('pages.liked_by', ['likedBy' => $likedBy]);
     }
+
 
     public function fetchProfiles()
     {
@@ -142,13 +146,16 @@ class LikeController extends Controller
     {
         $userId = auth()->id();
 
-        // Fetch users that the authenticated user has liked but exclude mutual likes
+        // Fetch users that the authenticated user has liked, ordered by the like date (created_at)
         $likedUsers = User::whereHas('likesReceived', function ($query) use ($userId) {
             $query->where('user_id', $userId);
         })
             ->whereDoesntHave('likesGiven', function ($query) use ($userId) {
                 $query->where('liked_user_id', $userId);
             })
+            ->with(['likesReceived' => function ($query) use ($userId) {
+                $query->where('user_id', $userId)->orderBy('likes.created_at', 'desc'); // Order by created_at
+            }])
             ->get();
 
         return view('pages.liked_users', ['likedUsers' => $likedUsers]);
