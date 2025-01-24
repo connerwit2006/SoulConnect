@@ -5,6 +5,7 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\MatchingController;
+use App\Http\Controllers\LikeController;
 
 
 Route::get('/', function () {
@@ -23,6 +24,18 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    //like system routes
+    Route::get('/profiles', [LikeController::class, 'index'])->name('profiles.index');
+    Route::get('/profiles/fetch', [LikeController::class, 'fetchProfiles'])->name('profiles.fetch');
+    Route::post('/like', [LikeController::class, 'interact'])->name('like.interact');
+    Route::get('/liked-by', [LikeController::class, 'likedBy'])->name('liked.by');
+    Route::post('/like-back', [LikeController::class, 'likeBack'])->name('like.likeBack');
+    Route::delete('/ignore', [LikeController::class, 'ignore'])->name('like.ignore');
+
+
+    //match system routes
+    Route::get('/matches', [MatchingController::class, 'findMatches']);
+    Route::get('/topmatches', [MatchingController::class, 'findTopMatches']);
 });
 
 // Register User Page
@@ -37,7 +50,5 @@ Route::get('/send-verification-email', [MailController::class, 'sendVerification
 // User Email Verification
 Route::get('/email/verify', [MailController::class, 'verifyEmail'])->name('verifyEmail');
 
-Route::get('/matches', [MatchingController::class, 'findMatches']);
-Route::get('/topmatches', [MatchingController::class, 'findTopMatches']);
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
