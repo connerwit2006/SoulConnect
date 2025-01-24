@@ -65,6 +65,13 @@ $user->music_styles = $request->input('music_styles');
 $user->kinderen = $request->input('kinderen');
 $user->kinderwens = $request->input('kinderwens');
 
+$user = $request->user();
+        
+if ($request->hasFile('face_card')) { // Use face_card here
+    $imageName = time() . '.' . $request->face_card->getClientOriginalExtension(); // Correct the method name and field name
+    $request->face_card->move(public_path('images'), $imageName);  
+    $user->face_card = $imageName; // Save the image name to the face_card column
+}
 $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
