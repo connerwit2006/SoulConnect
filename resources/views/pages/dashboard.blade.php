@@ -1,17 +1,27 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+    <div>
+        <!-- Top 5 Matches Showcase -->
+        <x-peopleShowcase
+            title="Top 5 matches!"
+            :people="[
+                ['id' => 1, 'name' => 'Sophie Janssen', 'img' => 'https://randomuser.me/api/portraits/women/1.jpg'],
+                ['id' => 2, 'name' => 'Thomas Verbeek', 'img' => 'https://randomuser.me/api/portraits/men/2.jpg'],
+                ['id' => 3, 'name' => 'Lisa de Vries', 'img' => 'https://randomuser.me/api/portraits/women/3.jpg'],
+                ['id' => 4, 'name' => 'Mark Hendriks', 'img' => 'https://randomuser.me/api/portraits/men/4.jpg'],
+                ['id' => 5, 'name' => 'Eva Bakker', 'img' => 'https://randomuser.me/api/portraits/women/5.jpg'],
+            ]"
+        />
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
+        <!-- Potential Matches Showcase -->
+        <x-peopleShowcase
+            title="Potentiële Matches!"
+            :people="[
+                ['id' => 6, 'name' => 'David Willems', 'img' => 'https://randomuser.me/api/portraits/men/6.jpg'],
+                ['id' => 7, 'name' => 'Nina Kuipers', 'img' => 'https://randomuser.me/api/portraits/women/7.jpg'],
+                ['id' => 8, 'name' => 'Jan de Boer', 'img' => 'https://randomuser.me/api/portraits/men/8.jpg'],
+                ['id' => 9, 'name' => 'Emma Smits', 'img' => 'https://randomuser.me/api/portraits/women/9.jpg'],
+                ['id' => 10, 'name' => 'Lucas Visser', 'img' => 'https://randomuser.me/api/portraits/men/10.jpg'],
+            ]"
+        />
     </div>
 </x-app-layout>
