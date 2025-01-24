@@ -4,11 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\MatchingController;
-
 
 Route::get('/', function () {
     return view('pages.welcome');
+});
+
+Route::get('/detail/{id}', function ($id) {
+    return view('pages.profileDetail', ['id' => $id]);
 });
 
 Route::get('/profile/{id}', [ProfileController::class, 'show'])->middleware('auth');
@@ -22,7 +24,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
 });
 
 // Register User Page
@@ -36,8 +37,5 @@ Route::get('/send-verification-email', [MailController::class, 'sendVerification
 
 // User Email Verification
 Route::get('/email/verify', [MailController::class, 'verifyEmail'])->name('verifyEmail');
-
-Route::get('/matches', [MatchingController::class, 'findMatches']);
-Route::get('/topmatches', [MatchingController::class, 'findTopMatches']);
 
 require __DIR__.'/auth.php';
