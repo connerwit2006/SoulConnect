@@ -30,7 +30,7 @@
         <div>
             <x-input-label for="gender" :value="__('Geslacht')" />
             <div class="mt-2">
-                <select id="gender" name="gender" class="form-select block mt-1 w-full text-gray-600" required>
+                <select id="gender" name="gender" class="form-select block mt-1 w-full text-gray-600" autofocus autocomplete>
                     <option value="" disabled selected hidden>{{ __('Kies uw Geslacht') }}</option>
                     <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>{{ __('Man') }}</option>
                     <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>{{ __('Vrouw') }}</option>
@@ -53,20 +53,47 @@
             </div>
             <x-input-error :messages="$errors->get('looking_for_gender')" class="mt-2" />
         </div>
-
+        <div>
+            <x-input-label for="kinderen" :value="__('Heeft u kinderen?')" />
+            <div class="mt-2">
+                <select id="kinderen" name="kinderen" class="form-select block mt-1 w-full text-gray-600" autofocus autocomplete required>
+                    <option value="" disabled selected hidden>{{ __('Kies een optie') }}</option>
+                    <option value="yes" {{ old('kinderen') == 'yes' ? 'selected' : '' }}>{{ __('Ja') }}</option>
+                    <option value="no" {{ old('kinderen') == 'no' ? 'selected' : '' }}>{{ __('Nee') }}</option>
+                </select>
+            </div>
+            <x-input-error :messages="$errors->get('kinderen')" class="mt-2" />
+        </div>
+        
+        <div>
+            <x-input-label for="kinderwens" :value="__('Heeft u een kinderwens?')" />
+            <div class="mt-2">
+                <select id="kinderwens" name="kinderwens" class="form-select block mt-1 w-full text-gray-600" autofocus autocomplete required>
+                    <option value="" disabled selected hidden>{{ __('Kies een optie') }}</option>
+                    <option value="yes" {{ old('kinderwens') == 'yes' ? 'selected' : '' }}>{{ __('Ja') }}</option>
+                    <option value="no" {{ old('kinderwens') == 'no' ? 'selected' : '' }}>{{ __('Nee') }}</option>
+                </select>
+            </div>
+            <x-input-error :messages="$errors->get('kinderwens')" class="mt-2" />
+        </div>
         <div>
             <x-input-label for="relationship_type" :value="__('Relatie waar je voor open staat')" />
             <div class="mt-2">
-                <select id="relationship_type" name="relationship_type"
-                    class="form-select block mt-1 w-full text-gray-600" required>
-                    <option value="" disabled selected hidden>{{ __('Kies een relatietype') }}</option>
-                    <option value="serious" {{ old('relationship_type') == 'serious' ? 'selected' : '' }}>
-                        {{ __('serieus') }}</option>
-                    <option value="casual" {{ old('relationship_type') == 'casual' ? 'selected' : '' }}>{{ __('vriendschappelijk') }}
-                    </option>
+                <select id="relationship_type" name="relationship_type" class="form-select block mt-1 w-full text-gray-600" required>
+                    <option value="" disabled selected hidden>{{ __('Relatie waar je voor open staat') }}</option>
+                    <option value="friendly" {{ old('relationship_type') == 'friendly' ? 'selected' : '' }}>{{ __('friendly') }}</option>
+                    <option value="romantic" {{ old('relationship_type') == 'romantic' ? 'selected' : '' }}>{{ __('romantic') }}</option>
                 </select>
             </div>
             <x-input-error :messages="$errors->get('relationship_type')" class="mt-2" />
+        </div>
+        <div>
+            <x-input-label for="pets" :value="__('Huisdieren (ja of nee)')" />
+            <select id="pets" name="pets" class="mt-1 block w-full" required autofocus autocomplete="pets">
+                <option value="yes" {{ old('pets', $user->pets) == 'yes' ? 'selected' : '' }}>Ja</option>
+                <option value="no" {{ old('pets', $user->pets) == 'no' ? 'selected' : '' }}>Nee</option>
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('pets')" />
         </div>
         <div>
             <x-input-label for="name" :value="__('Name')" />
@@ -78,7 +105,7 @@
        
         <div>
             <x-input-label for="one_liner" :value="__('One liner')" />
-            <x-text-input id="one_liner" name="one_liner" type="text" class="mt-1 block w-full" :value="old('one_liner', $user->one_liner)" required autofocus autocomplete="one_liner" />
+            <x-text-input id="one_liner" name="one_liner" type="text" class="mt-1 block w-full" :value="old('one_liner', $user->one_liner)" autofocus autocomplete="one_liner" />
             <x-input-error class="mt-2" :messages="$errors->get('one_liner')" />
         </div>
 
@@ -98,6 +125,26 @@
             <x-input-label for="postcode" :value="__('Postcode')" />
             <x-text-input id="postcode" name="postcode" type="text" class="mt-1 block w-full" :value="old('postcode', $user->postcode)" required autofocus autocomplete="postcode" />
             <x-input-error class="mt-2" :messages="$errors->get('postcode')" />
+        </div>
+        <div>
+            <x-input-label for="appreciate" :value="__('Waarderen in een relatie')" />
+            <x-text-input id="appreciate" name="appreciate" type="text" class="mt-1 block w-full" :value="old('appreciate', $user->appreciate)" required autofocus autocomplete="appreciate" />
+            <x-input-error class="mt-2" :messages="$errors->get('appreciate')" />
+        </div>
+        <div>
+            <x-input-label for="hobbies" :value="__('Hobby\'s')" />
+            <x-text-input id="hobbies" name="hobbies" type="text" class="mt-1 block w-full" :value="old('hobbies', $user->hobbies)"
+                required autofocus autocomplete="hobbies" />
+            <x-input-error class="mt-2" :messages="$errors->get('hobbies')" />
+        </div>
+        
+        
+        
+        <div>
+            <x-input-label for="music_styles" :value="__('Muziekstijlen')" />
+            <x-text-input id="music_styles" name="music_styles" type="text" class="mt-1 block w-full" :value="old('music_styles', $user->music_styles)"
+                required autofocus autocomplete="music_styles" />
+            <x-input-error class="mt-2" :messages="$errors->get('music_styles')" />
         </div>
         <div>
             <x-input-label for="email" :value="__('Email')" />
