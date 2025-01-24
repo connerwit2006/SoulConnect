@@ -2,6 +2,12 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    <!-- Welcome Back Greet -->
+    <div class="text-center mb-10">
+        <h1 class="text-3xl font-bold text-gray-900">Welkom terug!</h1>
+        <p class="text-md text-gray-700 mt-4">Log in om verder te gaan naar je account.</p>
+    </div>
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
