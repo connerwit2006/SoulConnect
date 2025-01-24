@@ -16,9 +16,11 @@ Route::get('/detail/{id}', function ($id) {
 Route::get('/profile/{id}', [ProfileController::class, 'show'])->middleware('auth');
 
 
-Route::get('/dashboard', function () {
-    return view('pages.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return view('pages.dashboard');
+//})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('dashboard', [RegisteredUserController::class, 'dashboard'])->middleware('auth')->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
