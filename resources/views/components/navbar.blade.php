@@ -24,9 +24,6 @@
                                 <div class="flex gap-4">
                                     <a class="rounded-md bg-accent px-5 py-2 shadow hover:scale-105 transition-transform ml-4" href="#">Login</a>
                                     <a class="rounded-md bg-accent px-5 py-2 shadow hover:scale-105 transition-transform" href="#">Register</a>
-
-                                    <!-- TEST -->
-                                    <button class="bg-red-500" @click="loggedIn = true">Simuleer Login</button>
                                 </div>
                             </template>
 
@@ -54,13 +51,13 @@
 
                 <!-- Mobile Dropdown -->
                 <div x-show="open" @click.away="open = false"
-                     class="absolute top-full left-0 w-full bg-white shadow-md lg:hidden z-10 transform origin-top"
-                     x-transition:enter="transition duration-300 ease-in-out"
-                     x-transition:enter-start="scale-y-0 opacity-0"
-                     x-transition:enter-end="scale-y-100 opacity-100"
-                     x-transition:leave="transition duration-300 ease-in"
-                     x-transition:leave-start="scale-y-100 opacity-100"
-                     x-transition:leave-end="scale-y-0 opacity-0">
+                        class="absolute top-full left-0 w-full bg-white shadow-md lg:hidden z-10 transform origin-top"
+                        x-transition:enter="transition duration-300 ease-in-out"
+                        x-transition:enter-start="scale-y-0 opacity-0"
+                        x-transition:enter-end="scale-y-100 opacity-100"
+                        x-transition:leave="transition duration-300 ease-in"
+                        x-transition:leave-start="scale-y-100 opacity-100"
+                        x-transition:leave-end="scale-y-0 opacity-0">
 
                     <div class="flex flex-col gap-4 p-4 text-sm uppercase text-white tracking-widest font-medium text-center">
                         <a class="rounded-md bg-accent px-5 py-2 shadow w-full" href="#">Home</a>
@@ -79,6 +76,7 @@
 
                         <template x-if="loggedIn">
                             <a class="rounded-md bg-accent px-5 py-2 shadow flex-1" href="/profile">Mijn Profiel</a>
+                            {{ __('Profile') }}
                         </template>
                     </div>
                 </div>
