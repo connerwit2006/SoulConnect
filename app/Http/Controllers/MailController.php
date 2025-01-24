@@ -2,37 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
 {
     public function sendVerificationEmail($user) 
-    {
+    {;
         $userName = $user->name;
         $userEmail = $user->email;
 
-        Mail::send('mails.verifyEmail', ['userName' => $userName], function ($message) use ($userEmail) {
+        $verificationUrl = route('verifyEmail', ['id' => $user->id]);
+
+        Mail::send('mails.verifyEmail', ['userName' => $userName, 'verificationUrl' => $verificationUrl], function ($message) use ($userEmail) {
             $message->to($userEmail);
-            $message->subject('Please verify your email address');
+            $message->subject('Verifiëer je emailadres');
         });
 
-        return redirect(route('dashboard'))->with('message', 'Verification email sent!');
+        return redirect(route('dashboard'))->with('message', 'Verificatie email gestuurd!');
     }
 
-    public function verifyEmail(Request $request) 
+    public function verifyEmail($id) 
     {
-        // dd('Email Verified');
-        $user = $request->user();
+        $user = User::findOrFail($id);
+    
+        if ($user->email_verified) {
+            return redirect(route('dashboard'))->with('message', 'Email is al geverifiëerd!');
+        }
+    
         $user->email_verified = true;
-
-        // dd($user);
-
-        $user->update();
-
-        return redirect(route('dashboard'))->with('message', 'Email Verified!');
-    }
+        $user->save();
+    
+        return redirect(route('dashboard'))->with('message', 'Email geverifiëerd!');
+    }    
 
     public function sendBlockedUserLoginAttemptMail($email) 
     {
@@ -41,6 +45,6 @@ class MailController extends Controller
             $message->subject('Login Attempt');
         });
 
-        return redirect(route('dashboard'))->with('message', 'Blocked User Login Attempt Mail Sent!');
+        return redirect(route('dashboard'))->with('message', 'Geblokkeerde gebruiker login poging mail gestuurd!');
     }
 }

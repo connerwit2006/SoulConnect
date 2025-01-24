@@ -39,7 +39,7 @@ class RegisteredUserController extends Controller
             'one_liner' => ['required', 'string', 'max:255'],
             'appreciate' => ['required', 'string', 'max:255'],
             'looking_for' => ['required', 'string', 'max:255'],
-            'facecard' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'facecard' => ['nullable',  'max:2048'],
             'gender' => ['required'],
             'looking_for_gender' => ['required'],
             'dob' => ['required', 'date', 'before:-18 years'],

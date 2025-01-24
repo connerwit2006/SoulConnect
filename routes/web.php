@@ -35,7 +35,7 @@ Route::post('/users/store', [RegisteredUserController::class, 'store'])->name('s
 Route::get('/send-verification-email', [MailController::class, 'sendVerificationEmail'])->name('sendVerificationEmail');
 
 // User Email Verification
-Route::get('/email/verify', [MailController::class, 'verifyEmail'])->name('verifyEmail');
+Route::get('/email/verify/{id}', [MailController::class, 'verifyEmail'])->name('verifyEmail');
 
 Route::get('/matches', [MatchingController::class, 'findMatches']);
 Route::get('/topmatches', [MatchingController::class, 'findTopMatches']);
