@@ -12,7 +12,7 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * Toon het profiel formulier van de gebruiker.
      */
     public function edit(Request $request): View
     {
@@ -22,7 +22,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * Werk de profielinformatie van de gebruiker bij.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -33,52 +33,52 @@ class ProfileController extends Controller
         }
         $user = Auth::user();
 
-   //Validatie regels
-$request->validate([
-    'one_liner' => ['required', 'string', 'max:255'],
-    'dob' => ['required', 'date', 'before:-18 years'],
-    'looking_for_gender' => 'required|string',
-    'appreciate' => 'required|string',
-    'nickname' => 'required|string|max:255',
-    'relationship_type' => ['required', 'string', 'max:255'],
-    'gender' => ['required'],
-    'postcode' => ['required', 'string', 'max:255'],
-    'hobbies' => ['nullable', 'string', 'max:255'],
-    'pets' => ['required', 'in:yes,no'],
-    'music_styles' => ['nullable', 'string', 'max:255'],
-    'kinderen' => ['required', 'in:yes,no'],
-    'kinderwens' => ['required', 'in:yes,no'],
-]);
+        //Validatie regels
+        $request->validate([
+            'one_liner' => ['required', 'string', 'max:255'],
+            'dob' => ['required', 'date', 'before:-18 years'],
+            'looking_for_gender' => 'required|string',
+            'appreciate' => 'required|string',
+            'nickname' => 'required|string|max:255',
+            'relationship_type' => ['required', 'string', 'max:255'],
+            'gender' => ['required'],
+            'postcode' => ['required', 'string', 'max:255'],
+            'hobbies' => ['nullable', 'string', 'max:255'],
+            'pets' => ['required', 'in:yes,no'],
+            'music_styles' => ['nullable', 'string', 'max:255'],
+            'kinderen' => ['required', 'in:yes,no'],
+            'kinderwens' => ['required', 'in:yes,no'],
+        ]);
 
-// Update de user profiel informatie
-$user->one_liner = $request->input('one_liner');
-$user->dob = $request->input('dob');
-$user->looking_for_gender = $request->input('looking_for_gender');
-$user->nickname = $request->input('nickname');
-$user->relationship_type = $request->input('relationship_type');
-$user->gender = $request->input('gender');
-$user->appreciate = $request->input('appreciate');
-$user->postcode = $request->input('postcode');
-$user->hobbies = $request->input('hobbies');
-$user->pets = $request->input('pets');
-$user->music_styles = $request->input('music_styles');
-$user->kinderen = $request->input('kinderen');
-$user->kinderwens = $request->input('kinderwens');
+        // Werk de profielinformatie van de gebruiker bij
+        $user->one_liner = $request->input('one_liner');
+        $user->dob = $request->input('dob');
+        $user->looking_for_gender = $request->input('looking_for_gender');
+        $user->nickname = $request->input('nickname');
+        $user->relationship_type = $request->input('relationship_type');
+        $user->gender = $request->input('gender');
+        $user->appreciate = $request->input('appreciate');
+        $user->postcode = $request->input('postcode');
+        $user->hobbies = $request->input('hobbies');
+        $user->pets = $request->input('pets');
+        $user->music_styles = $request->input('music_styles');
+        $user->kinderen = $request->input('kinderen');
+        $user->kinderwens = $request->input('kinderwens');
 
-$user = $request->user();
-        
-if ($request->hasFile('face_card')) { // Use face_card here
-    $imageName = time() . '.' . $request->face_card->getClientOriginalExtension(); // Correct the method name and field name
-    $request->face_card->move(public_path('images'), $imageName);  
-    $user->face_card = $imageName; // Save the image name to the face_card column
-}
-$request->user()->save();
+        $user = $request->user();
+
+        if ($request->hasFile('face_card')) { // Gebruik face_card hier
+            $imageName = time() . '.' . $request->face_card->getClientOriginalExtension(); // Corrigeer de methodenaam en veldnaam
+            $request->face_card->move(public_path('images'), $imageName);
+            $user->face_card = $imageName; // Sla de afbeelding naam op in de face_card kolom
+        }
+        $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
-     * Delete the user's account.
+     * Verwijder het account van de gebruiker.
      */
     public function destroy(Request $request): RedirectResponse
     {
