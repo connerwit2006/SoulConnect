@@ -62,22 +62,18 @@ class LikeController extends Controller
 
     public function likedBy()
     {
-        $userId = auth()->id();
+        $userId = auth()->id(); // Get the logged-in user's ID
 
-        // Fetch users who liked the authenticated user, ordered by the like date (created_at)
-        $likedBy = User::whereHas('likesGiven', function ($query) use ($userId) {
-            $query->where('liked_user_id', $userId);
-        })
-            ->whereDoesntHave('likesReceived', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            })
-            ->with(['likesGiven' => function ($query) use ($userId) {
-                $query->where('liked_user_id', $userId)->orderBy('likes.created_at', 'desc'); // Order by created_at
-            }])
+        // Fetch users who liked the logged-in user, ordered by the most recent like
+        $likedBy = User::select('users.*') // Select all columns from the 'users' table
+            ->join('likes', 'likes.user_id', '=', 'users.id') // Join the 'likes' table on 'user_id'
+            ->where('likes.liked_user_id', $userId) // Filter by the logged-in user being liked
+            ->orderByDesc('likes.id') // Order by the most recent like (by 'likes.id')
             ->get();
 
         return view('pages.liked_by', ['likedBy' => $likedBy]);
     }
+
 
 
     public function fetchProfiles()
@@ -144,18 +140,13 @@ class LikeController extends Controller
 
     public function likedUsers()
     {
-        $userId = auth()->id();
+        $userId = auth()->id(); // Get the logged-in user's ID
 
-        // Fetch users that the authenticated user has liked, ordered by the like date (created_at)
-        $likedUsers = User::whereHas('likesReceived', function ($query) use ($userId) {
-            $query->where('user_id', $userId);
-        })
-            ->whereDoesntHave('likesGiven', function ($query) use ($userId) {
-                $query->where('liked_user_id', $userId);
-            })
-            ->with(['likesReceived' => function ($query) use ($userId) {
-                $query->where('user_id', $userId)->orderBy('likes.created_at', 'desc'); // Order by created_at
-            }])
+        // Fetch users the logged-in user has liked, ordered by the most recent like
+        $likedUsers = User::select('users.*') // Select all columns from the 'users' table
+            ->join('likes', 'likes.liked_user_id', '=', 'users.id') // Join the 'likes' table on 'liked_user_id'
+            ->where('likes.user_id', $userId) // Filter by the logged-in user's likes
+            ->orderByDesc('likes.id') // Order by the most recent like (by 'likes.id')
             ->get();
 
         return view('pages.liked_users', ['likedUsers' => $likedUsers]);

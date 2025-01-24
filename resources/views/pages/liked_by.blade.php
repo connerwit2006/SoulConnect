@@ -22,8 +22,7 @@
                     </td>
                     <td>{{ $profile->nickname }}</td>
                     <td>{{ $profile->one_liner }}</td>
-                    <td>{{ \Carbon\Carbon::parse($profile->likesReceived->first()->created_at)->toFormattedDateString() }}</td>
-
+                    <td>{{ \Carbon\Carbon::parse($profile->likesReceived->first()->created_at)->format('l, F j, Y \a\t h:i A') }}</td>
                     <td>
                         <button class="btn btn-success like-back-btn" data-id="{{ $profile->id }}">Like Back</button>
                         <button class="btn btn-danger ignore-btn" data-id="{{ $profile->id }}">Ignore</button>

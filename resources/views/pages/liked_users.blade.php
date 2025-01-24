@@ -12,8 +12,7 @@
                         <th>Profile Picture</th>
                         <th>Nickname</th>
                         <th>One-Liner</th>
-                        <th>Date Liked</th>
-                        <th>Action</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,7 +24,6 @@
                             </td>
                             <td>{{ $profile->nickname }}</td>
                             <td>{{ $profile->one_liner }}</td>
-                            <td>{{ \Carbon\Carbon::parse($profile->likesReceived->first()->created_at)->toFormattedDateString() }}</td>
                             <td>
                                 <button class="btn btn-danger revert-like-btn" data-id="{{ $profile->id }}">Revert Like</button>
                             </td>
