@@ -30,6 +30,20 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    //like system routes
+    Route::get('/profiles', [LikeController::class, 'index'])->name('profiles.index');
+    Route::get('/profiles/fetch', [LikeController::class, 'fetchProfiles'])->name('profiles.fetch');
+    Route::post('/like', [LikeController::class, 'interact'])->name('like.interact');
+    Route::get('/liked-by', [LikeController::class, 'likedBy'])->name('liked.by');
+    Route::post('/like-back', [LikeController::class, 'likeBack'])->name('like.likeBack');
+    Route::delete('/ignore', [LikeController::class, 'ignore'])->name('like.ignore');
+    Route::get('/liked-users', [LikeController::class, 'likedUsers'])->name('like.likedUsers');
+    Route::post('/like/remove', [LikeController::class, 'removeLike'])->name('like.remove');
+
+
+    //match system routes
+    Route::get('/matches', [MatchingController::class, 'findMatches']);
+    Route::get('/topmatches', [MatchingController::class, 'findTopMatches']);
 });
 
 // Register User Page
