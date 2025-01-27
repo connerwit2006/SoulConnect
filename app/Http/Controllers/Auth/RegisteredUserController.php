@@ -25,14 +25,14 @@ class RegisteredUserController extends Controller
         // Return alle gebruikers, behalve de ingelogde gebruiker
         $users = User::where('id', '!=', Auth::id())->get();
 
-        // Formatteer de gebruikersgegevens in de juiste structuur
+        // format the users to a format that is usable in the front-end
         $people = $users->map(function ($user) {
             return [
                 'id' => $user->id,
                 'name' => $user->name,
                 'img' => $user->profile_picture ?? 'https://via.placeholder.com/150',
             ];
-        })->toArray(); // Zorg dat dit een array is
+        })->toArray();
 
         return view('pages.dashboard')->with([
             'peopleJson' => json_encode($people),
@@ -63,7 +63,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-   public function store(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $formFields = $request->validate([
             'name' => ['required', 'string', 'max:255'],

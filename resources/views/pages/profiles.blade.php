@@ -1,3 +1,4 @@
+<!--simple view to load profiles for the logged in user to like-->
 <x-app-layout>
     <div class="container">
         <h2>Profiles</h2>

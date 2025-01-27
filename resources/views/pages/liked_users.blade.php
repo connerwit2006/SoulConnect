@@ -1,70 +1,78 @@
 <x-app-layout>
-    <div class="container">
-        <h2>Users You Liked</h2>
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-bold mb-6 text-center">Gebruikers die je leuk vindt</h2>
 
         @if ($likedUsers->isEmpty())
-            <p class="text-muted">You haven't liked anyone yet!</p>
+            <p class="text-center text-gray-500">Je hebt nog niemand geliked!</p>
         @else
-            <table class="table">
-                <thead>
+            <div class="overflow-x-auto shadow-lg rounded-lg">
+                <table class="table-auto w-full bg-white rounded-lg border border-gray-200">
+                    <thead class="bg-gray-100 text-gray-600 text-sm uppercase">
                     <tr>
-                        <th>#</th>
-                        <th>Profile Picture</th>
-                        <th>Nickname</th>
-                        <th>One-Liner</th>
-                        <th>Actions</th>
+                        <th class="px-6 py-4 text-left">#</th>
+                        <th class="px-6 py-4 text-left">Profiel foto</th>
+                        <th class="px-6 py-4 text-left">Bijnaam</th>
+                        <th class="px-6 py-4 text-left">One-Liner</th>
+                        <th class="px-6 py-4 text-center">Acties</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody class="text-gray-700 text-sm">
                     @foreach ($likedUsers as $index => $profile)
-                        <tr class="liked-row" data-id="{{ $profile->id }}">
-                            <td>{{ $index + 1 }}</td>
-                            <td>
-                                <img src="{{ $profile->face_card }}" alt="Profile Picture" class="profile-pic" style="width: 50px; height: 50px; border-radius: 50%;">
+                        <tr class="border-t hover:bg-gray-50 transition" data-id="{{ $profile->id }}">
+                            <td class="px-6 py-4">{{ ($likedUsers->currentPage() - 1) * $likedUsers->perPage() + $index + 1 }}</td>
+                            <td class="px-6 py-4">
+                                <img src="{{ $profile->face_card }}" alt="Profile Picture"
+                                    class="w-12 h-12 rounded-full object-cover border border-gray-300">
                             </td>
-                            <td>{{ $profile->nickname }}</td>
-                            <td>{{ $profile->one_liner }}</td>
-                            <td>
-                                <button class="btn btn-danger revert-like-btn" data-id="{{ $profile->id }}">Revert Like</button>
+                            <td class="px-6 py-4">{{ $profile->nickname }}</td>
+                            <td class="px-6 py-4">{{ $profile->one_liner }}</td>
+                            <td class="px-6 py-4 text-center">
+                                <button class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg revert-like-btn transition"
+                                    data-id="{{ $profile->id }}">
+                                    Revert Like
+                                </button>
                             </td>
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+
+            {{-- Pagination Links --}}
+            <div class="flex justify-center mt-6 space-x-2">
+                {{ $likedUsers->links('pagination::tailwind') }}
+            </div>
         @endif
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.revert-like-btn').forEach(button => {
-                button.addEventListener('click', function () {
-                    const profileId = this.dataset.id;
+        document.querySelectorAll('.revert-like-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const profileId = this.getAttribute('data-id');
 
-                    fetch('{{ route("like.remove") }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        },
-                        body: JSON.stringify({
-                            liked_user_id: profileId,
-                        }),
+                // Send the revert like request
+                fetch("{{ route('like.remove') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        liked_user_id: profileId,
+                        action: 'revert',
                     })
+                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            const row = document.querySelector(`.liked-row[data-id="${profileId}"]`);
-                            row.remove();
-
-                            if (!document.querySelectorAll('.liked-row').length) {
-                                location.reload(); // Reload if no users are left
-                            }
+                            document.querySelector(`tr[data-id='${profileId}']`).remove();
                         } else {
-                            alert('An error occurred: ' + data.message);
+                            alert('Something went wrong.');
                         }
                     })
-                    .catch(error => console.error('Error:', error));
-                });
+                    .catch(error => {
+                        alert('Error: ' + error);
+                    });
             });
         });
     </script>

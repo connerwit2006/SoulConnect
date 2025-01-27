@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MatchingController;
 use App\Http\Controllers\LikeController;
-
 
 Route::get('/', function () {
     return view('pages.welcome');
@@ -25,6 +25,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/gallery/upload', [GalleryController::class, 'store'])->name('gallery.upload');
+    Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.delete');
+
 
     //like system routes
     Route::get('/profiles', [LikeController::class, 'index'])->name('profiles.index');

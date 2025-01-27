@@ -1,3 +1,4 @@
+<!--simple view for profiles that liked the logged in user-->
 <x-app-layout>
     <div class="container">
         <h2>Users Who Liked You</h2>
@@ -16,7 +17,7 @@
             <tbody id="liked-by-container">
                 @foreach ($likedBy ?? [] as $index => $profile)
                 <tr class="liked-row" data-id="{{ $profile->id }}">
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ ($likedBy->currentPage() - 1) * $likedBy->perPage() + $index + 1 }}</td>
                     <td>
                         <img src="{{ $profile->face_card }}" alt="Profile Picture" class="profile-pic" style="width: 50px; height: 50px; border-radius: 50%;">
                     </td>
@@ -30,84 +31,10 @@
                 </tr>
                 @endforeach
             </tbody>
-
         </table>
+
+        {{ $likedBy->links() }}
 
         <p id="no-likes" class="text-muted" style="display: {{ count($likedBy) ? 'none' : 'block' }};">No users have liked you yet.</p>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const container = document.getElementById('liked-by-container');
-            const noLikesMessage = document.getElementById('no-likes');
-
-            // Handle "Like Back" button clicks
-            document.querySelectorAll('.like-back-btn').forEach(button => {
-                button.addEventListener('click', async function() {
-                    const userId = this.dataset.id;
-
-                    try {
-                        const response = await fetch('{{ route("like.likeBack") }}', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            },
-                            body: JSON.stringify({
-                                liked_user_id: userId
-                            }),
-                        });
-                        const data = await response.json();
-
-                        if (data.success) {
-                            const likedRow = document.querySelector(`.liked-row[data-id="${userId}"]`);
-                            likedRow.remove();
-
-                            if (!document.querySelectorAll('.liked-row').length) {
-                                noLikesMessage.style.display = 'block';
-                            }
-                        } else {
-                            alert('An error occurred: ' + data.message);
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                    }
-                });
-            });
-
-            // Handle "Ignore" button clicks
-            document.querySelectorAll('.ignore-btn').forEach(button => {
-                button.addEventListener('click', async function() {
-                    const userId = this.dataset.id;
-
-                    try {
-                        const response = await fetch('{{ route("like.ignore") }}', {
-                            method: 'DELETE',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            },
-                            body: JSON.stringify({
-                                liked_user_id: userId
-                            }),
-                        });
-                        const data = await response.json();
-
-                        if (data.success) {
-                            const likedRow = document.querySelector(`.liked-row[data-id="${userId}"]`);
-                            likedRow.remove();
-
-                            if (!document.querySelectorAll('.liked-row').length) {
-                                noLikesMessage.style.display = 'block';
-                            }
-                        } else {
-                            alert('An error occurred: ' + data.message);
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                    }
-                });
-            });
-        });
-    </script>
 </x-app-layout>
