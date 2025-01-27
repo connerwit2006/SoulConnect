@@ -22,7 +22,7 @@ class MatchingController extends Controller
     }
 
     //algorithm to calculate match score between 2 users
-    private function calculateMatchScore(User $user, User $otherUser)
+    public function calculateMatchScore(User $user, User $otherUser)
     {
         $score = 0;
 

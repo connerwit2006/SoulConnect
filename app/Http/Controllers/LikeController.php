@@ -7,6 +7,9 @@ use App\Models\Like;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\MatchingController;
+use App\Http\Controllers\Controller;
+
 
 class LikeController extends Controller
 {
@@ -16,15 +19,18 @@ class LikeController extends Controller
     {
         $userId = Auth::id(); // fetch logged in user ID
 
-        // fetch 10 profiles that the logged in user hasn't interacted with
+        //fetch users that the logged in user hasn't interacted with, sort by the matchingcontroller calculation function
         $profiles = User::where('id', '!=', $userId)
             ->whereNotIn('id', function ($query) use ($userId) {
                 $query->select('liked_user_id')
                     ->from('likes')
                     ->where('user_id', $userId);
             })
-            ->take(10)
-            ->get();
+            ->get()
+            ->sortByDesc(function ($profile) use ($userId) {
+                //return users sorted by match score using the findMatches function from the MatchingController
+                return (new MatchingController)->calculateMatchScore(User::find($userId), $profile);
+            });
 
         return view('pages.profiles', compact('profiles'));
     }
