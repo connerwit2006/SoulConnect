@@ -19,6 +19,10 @@ class RegisteredUserController extends Controller
 {
     public function dashboard()
     {
+        // Ingelogde gebruiker
+        $loggedInUser = Auth::user();
+
+        // Return alle gebruikers, behalve de ingelogde gebruiker
         $users = User::where('id', '!=', Auth::id())->get();
 
         // Formatteer de gebruikersgegevens in de juiste structuur
@@ -30,7 +34,10 @@ class RegisteredUserController extends Controller
             ];
         })->toArray(); // Zorg dat dit een array is
 
-        return view('pages.dashboard')->with(['peopleJson' => json_encode($people)]);
+        return view('pages.dashboard')->with([
+            'peopleJson' => json_encode($people),
+            'loggedInUser' => $loggedInUser,
+        ]);
     }
 
     /**

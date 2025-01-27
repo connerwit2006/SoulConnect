@@ -16,16 +16,10 @@ Route::get('/detail/{id}', function ($id) {
     return view('pages.profileDetail', ['id' => $id]);
 });
 
-Route::get('/profile/{id}', [ProfileController::class, 'show'])->middleware('auth');
+Route::get('/profile/{id}', [ProfileController::class, 'show'])->middleware('auth')->name('profile.show');
 
 // Show Dashboard
-Route::get('/dashboard', [RegisteredUserController::class, 'show'])->middleware('auth')->name('dashboard');
-
-//Route::get('/dashboard', function () {
-//    return view('pages.dashboard');
-//})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('dashboard', [RegisteredUserController::class, 'dashboard'])->middleware('auth')->name('dashboard');
+Route::get('/dashboard', [RegisteredUserController::class, 'dashboard'])->middleware('auth')->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -44,8 +38,20 @@ Route::middleware('auth')->group(function () {
 
 
     //match system routes
-    Route::get('/matches', [MatchingController::class, 'findMatches']);
-    Route::get('/topmatches', [MatchingController::class, 'findTopMatches']);
+    Route::get('/matches', [MatchingController::class, 'findMatches'])->name('matches.index');
+    Route::get('/topmatches', [MatchingController::class, 'findTopMatches'])->name('matches.top');
+
+    // Get Users List
+    Route::get('/users/list', [RegisteredUserController::class, 'fetchUsersList'])->name('usersList');
+
+    // Report User
+    Route::get('/report/user/{id}', [RegisteredUserController::class, 'reportUser'])->name('reportUser');
+
+    // Block User
+    Route::get('/block/user/{id}', [RegisteredUserController::class, 'blockUser'])->name('blockUser');
+
+    // Unblock User
+    Route::get('/unblock/user/{id}', [RegisteredUserController::class, 'unBlockUser'])->name('unblockUser');
 });
 
 // Register User Page
@@ -60,22 +66,7 @@ Route::get('/send-verification-email', [MailController::class, 'sendVerification
 // User Email Verification
 Route::get('/email/verify/{id}', [MailController::class, 'verifyEmail'])->name('verifyEmail');
 
-Route::get('/matches', [MatchingController::class, 'findMatches']);
-Route::get('/topmatches', [MatchingController::class, 'findTopMatches']);
-
-// Get Users List
-Route::get('/users/list', [RegisteredUserController::class, 'fetchUsersList'])->name('usersList');
-
-// Report User
-Route::get('/report/user/{id}', [RegisteredUserController::class, 'reportUser'])->name('reportUser');
-
 // Show User Blocked Page
 Route::get('/user/blocked', [RegisteredUserController::class, 'showUserBlockedPage'])->name('userBlocked');
-
-// Block User
-Route::get('/block/user/{id}', [RegisteredUserController::class, 'blockUser'])->middleware('auth')->name('blockUser');
-
-// Unblock User
-Route::get('/unblock/user/{id}', [RegisteredUserController::class, 'unBlockUser'])->middleware('auth')->name('unblockUser');
 
 require __DIR__.'/auth.php';

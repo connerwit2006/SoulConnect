@@ -12,9 +12,9 @@
                     <div class="flex flex-row">
                         <ul class="flex items-center gap-8 text-md text-gray-700 tracking-wider">
                             <li><a class="hover:text-accent" href="#">Berichten</a></li>
-                            <li><a class="hover:text-accent" href="#">Matches</a></li>
-                            <li><a class="hover:text-accent" href="#">Likes</a></li>
-                            <li><a class="hover:text-accent" href="#">Dashboard</a></li>
+                            <li><a class="hover:text-accent" href="{{ route('matches.index') }}">Matches</a></li>
+                            <li><a class="hover:text-accent" href="{{ route('like.likedUsers') }}">Likes</a></li>
+                            <li><a class="hover:text-accent" href="{{ route('dashboard') }}">Dashboard</a></li>
                         </ul>
 
                         <!-- Desktop Login/Sign-in Buttons -->
@@ -22,13 +22,13 @@
                             <!-- Show Login/Signup =! logged-in -->
                             <template x-if="!loggedIn">
                                 <div class="flex gap-4">
-                                    <a class="rounded-md bg-accent px-5 py-2 shadow hover:scale-105 transition-transform ml-4" href="#">Login</a>
-                                    <a class="rounded-md bg-accent px-5 py-2 shadow hover:scale-105 transition-transform" href="#">Register</a>
+                                    <a class="rounded-md bg-accent px-5 py-2 shadow hover:scale-105 transition-transform ml-4" href="{{ route('login') }}">Login</a>
+                                    <a class="rounded-md bg-accent px-5 py-2 shadow hover:scale-105 transition-transform" href="{{ route('register') }}">Register</a>
                                 </div>
                             </template>
 
                             <template x-if="loggedIn">
-                                <a :href="`/profile/${user.id}`" class="ml-4 bg-accent px-5 py-2 rounded-md text-white">Mijn Profiel</a>
+                                <a href="{{ route('profile.show', auth()->id()) }}" class="ml-4 bg-accent px-5 py-2 rounded-md text-white">Mijn Profiel</a>
                             </template>
                         </div>
                     </div>
