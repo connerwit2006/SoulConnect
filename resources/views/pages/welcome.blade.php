@@ -10,10 +10,13 @@
                 <div class="flex flex-col w-full max-w-md rounded-xl border border-gray-200 bg-white shadow-lg">
                     <div class="aspect-w-16 aspect-h-9">
                         <img src="image/PersonOnPhone.jpg" loading="lazy" alt="Person on Phone" class="w-full h-full object-contain rounded-t-xl" />
+                        <p class="sr-only">
+                            Afbeelding ontworpen door <a href="https://www.freepik.com/wayhomestudio" target="_blank" rel="noopener noreferrer">wayhomestudio</a> op <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer">Freepik</a>.
+                        </p>
                     </div>
 
                     <div class="p-6 flex-1">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Login / Registreer</h2>
+                        <h2 class="text-2xl font-bold text-gray-700 mb-4">Login / Registreer</h2>
                         <p class="text-gray-700 text-base leading-relaxed">
                             Maak een gratis account aan en ontdek jouw perfecte match. Vul je profiel in en ontvang gepersonaliseerde matches op basis van jouw voorkeuren. Begin vandaag nog en laat het algoritme voor jou werken. Vind iemand die perfect bij jou past en maak jouw datingervaring onvergetelijk.                        </p>
                         <div class="mt-4 flex justify-center gap-3">
@@ -29,10 +32,13 @@
                 <div class="flex flex-col w-full max-w-md rounded-xl border border-gray-200 bg-white shadow-lg">
                     <div class="aspect-w-16 aspect-h-9">
                         <img src="image/HappyMen.jpg" loading="lazy" alt="Person Pointing" class="w-full h-full object-contain rounded-t-xl" />
+                        <p class="sr-only">
+                            Afbeelding ontworpen door <a href="https://www.freepik.com/wayhomestudio" target="_blank" rel="noopener noreferrer">wayhomestudio</a> op <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer">Freepik</a>.
+                        </p>
                     </div>
 
                     <div class="p-6 flex-1">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Dagelijkse Voordelen</h2>
+                        <h2 class="text-2xl font-bold text-gray-700 mb-4">Dagelijkse Voordelen</h2>
                         <p class="text-gray-700 text-base leading-relaxed">
                             Ontvang dagelijks een lijst met jouw top 5 matches. Ons slimme algoritme maakt daten makkelijker en leuker!
                         </p>
@@ -51,10 +57,13 @@
                 <div class="flex flex-col w-full max-w-md rounded-xl border border-gray-200 bg-white shadow-lg">
                     <div class="aspect-w-16 aspect-h-9">
                         <img src="image/HappyMen2.jpg" loading="lazy" alt="Person Smiling" class="w-full h-full object-contain rounded-t-xl" />
+                        <p class="sr-only">
+                            Afbeelding ontworpen door <a href="https://www.freepik.com/wayhomestudio" target="_blank" rel="noopener noreferrer">wayhomestudio</a> op <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer">Freepik</a>.
+                        </p>
                     </div>
 
                     <div class="p-6 flex-1">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Veilig Daten</h2>
+                        <h2 class="text-2xl font-bold text-gray-700 mb-4">Veilig Daten</h2>
                         <p class="text-gray-700 text-base leading-relaxed">
                             Veiligheid staat bij ons voorop. Alle profielen worden zorgvuldig gecontroleerd en wij bieden een veilige omgeving voor jou en je matches.
                         </p>
@@ -72,10 +81,13 @@
                 <div class="flex flex-col w-full max-w-md rounded-xl border border-gray-200 bg-white shadow-lg">
                     <div class="aspect-w-16 aspect-h-9">
                         <img src="image/PersonPointingToPhone.jpg" loading="lazy" alt="Person Relaxing" class="w-full h-full object-contain rounded-t-xl" />
+                        <p class="sr-only">
+                            Afbeelding ontworpen door <a href="https://www.freepik.com/wayhomestudio" target="_blank" rel="noopener noreferrer">wayhomestudio</a> op <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer">Freepik</a>.
+                        </p>
                     </div>
 
                     <div class="p-6 flex-1">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Altijd en Overal</h2>
+                        <h2 class="text-2xl font-bold text-gray-700 mb-4">Altijd en Overal</h2>
                         <p class="text-gray-700 text-base leading-relaxed">
                             Gebruik ons platform op elk apparaat. Of je nu onderweg bent of thuis op de bank zit, blijf altijd verbonden met je matches.
                         </p>
