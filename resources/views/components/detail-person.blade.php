@@ -38,10 +38,14 @@
                     <!-- Decription -->
                     <x-description :description="$person['description']" />
 
-                    <!-- Custom Button -->
+                    <!-- Send Message Button -->
                     <x-buttons :buttons="[
-                        ['text' => 'Stuur een bericht', 'url' => '#', 'bgColor' => 'bg-accent'],
-                        ['text' => 'Rapporteer', 'url' => '#', 'bgColor' => 'bg-zinc-500', 'opacity' => 'opacity-50']
+                        ['text' => 'Stuur een bericht', 'url' => '#', 'bgColor' => 'bg-accent', 'accessible' => false]
+                    ]" />
+
+                    <!-- Report Button -->
+                    <x-buttons :buttons="[
+                        ['text' => 'Rapporteer', 'url' => '#', 'bgColor' => 'bg-zinc-500', 'opacity' => 'opacity-50', 'accessible' => true ]
                     ]" />
                 </div>
             </div>

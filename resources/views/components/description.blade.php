@@ -9,7 +9,7 @@
     </p>
 
     <!-- Read More Button -->
-    <button id="readMoreBtn" class="text-blue-500 hover:underline">Verder lezen...</button>
+    <button id="readMoreBtn" class="text-blue-500 hover:underline md:mb-10">Verder lezen...</button>
 </div>
 
 <script>
