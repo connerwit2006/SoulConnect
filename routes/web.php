@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MatchingController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\TransactionController;
 
 Route::get('/', function () {
     return view('pages.welcome');
@@ -47,7 +49,11 @@ Route::middleware('auth')->group(function () {
     //match system routes
     Route::get('/matches', [MatchingController::class, 'findMatches']);
     Route::get('/topmatches', [MatchingController::class, 'findTopMatches']);
-  
+
+    //payment system routes
+    Route::get('/payment', [PaymentController::class, 'showPaymentPage'])->name('payment.page');
+    Route::post('/payment', [PaymentController::class, 'processPayment'])->name('payment.process');
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 });
 
 // Register User Page
