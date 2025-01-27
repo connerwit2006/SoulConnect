@@ -27,9 +27,11 @@
                                 </div>
                             </template>
 
-                            <template x-if="loggedIn">
-                                <a href="{{ route('profile.show', auth()->id()) }}" class="ml-4 bg-accent px-5 py-2 rounded-md text-white">Mijn Profiel</a>
-                            </template>
+                            @auth
+                                <template x-if="loggedIn">
+                                    <a href="{{ route('profile.edit') }}" class="ml-4 bg-accent px-5 py-2 rounded-md text-white">Mijn Profiel</a>
+                                </template>
+                            @endauth
                         </div>
                     </div>
                 </nav>
@@ -60,11 +62,11 @@
                         x-transition:leave-end="scale-y-0 opacity-0">
 
                     <div class="flex flex-col gap-4 p-4 text-sm uppercase text-white tracking-widest font-medium text-center">
-                        <a class="rounded-md bg-accent px-5 py-2 shadow w-full" href="#">Home</a>
+                        <a class="rounded-md bg-accent px-5 py-2 shadow w-full" href="/">Home</a>
                         <a class="rounded-md bg-accent px-5 py-2 shadow w-full" href="#">Berichten</a>
-                        <a class="rounded-md bg-accent px-5 py-2 shadow w-full" href="#">Matches</a>
-                        <a class="rounded-md bg-accent px-5 py-2 shadow w-full" href="#">Likes</a>
-                        <a class="rounded-md bg-accent px-5 py-2 shadow w-full" href="#">Dashboard</a>
+                        <a class="rounded-md bg-accent px-5 py-2 shadow w-full" href="{{ route('matches.index') }}">Matches</a>
+                        <a class="rounded-md bg-accent px-5 py-2 shadow w-full" href="{{ route('like.likedUsers') }}">Likes</a>
+                        <a class="rounded-md bg-accent px-5 py-2 shadow w-full" href="{{ route('dashboard') }}">Dashboard</a>
 
                         <!-- Show Login/Signup =! logged-in -->
                         <template x-if="!loggedIn">

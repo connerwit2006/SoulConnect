@@ -9,9 +9,9 @@
             <!-- Navigation Links -->
             <ul class="text-lg flex items-center justify-center flex-col gap-7 md:flex-row md:gap-12 transition-all duration-500 py-4 mb-10 border-b border-gray-200">
                 <li><a href="#" class="text-gray-800 hover:text-accent">Berichten</a></li>
-                <li><a href="#" class="text-gray-800 hover:text-accent">Matches</a></li>
-                <li><a href="#" class="text-gray-800 hover:text-accent">Likes</a></li>
-                <li><a href="#" class="text-gray-800 hover:text-accent">Dashboard</a></li>
+                <li><a href="{{ route('matches.index') }}" class="text-gray-800 hover:text-accent">Matches</a></li>
+                <li><a href="{{ route('like.likedUsers') }}" class="text-gray-800 hover:text-accent">Likes</a></li>
+                <li><a href="{{ route('dashboard') }}" class="text-gray-800 hover:text-accent">Dashboard</a></li>
                 <li><a href="#" class="text-gray-800 hover:text-accent">FAQ</a></li>
             </ul>
 
