@@ -13,10 +13,8 @@ Route::get('/', function () {
 
 Route::get('/profile/{id}', [ProfileController::class, 'show'])->middleware('auth');
 
-
-Route::get('/dashboard', function () {
-    return view('pages.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Show Dashboard
+Route::get('/dashboard', [RegisteredUserController::class, 'show'])->middleware('auth')->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -42,6 +40,9 @@ Route::get('/topmatches', [MatchingController::class, 'findTopMatches']);
 
 // Get Users List
 Route::get('/users/list', [RegisteredUserController::class, 'fetchUsersList'])->name('usersList');
+
+// Report User
+Route::get('/report/user/{id}', [RegisteredUserController::class, 'reportUser'])->name('reportUser');
 
 // Show User Blocked Page
 Route::get('/user/blocked', [RegisteredUserController::class, 'showUserBlockedPage'])->name('userBlocked');

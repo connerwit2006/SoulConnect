@@ -24,9 +24,6 @@
                                 <div class="flex gap-4">
                                     <a class="rounded-md bg-accent px-5 py-2 shadow hover:scale-105 transition-transform ml-4" href="#">Login</a>
                                     <a class="rounded-md bg-accent px-5 py-2 shadow hover:scale-105 transition-transform" href="#">Register</a>
-
-                                    <!-- TEST -->
-                                    <button class="bg-red-500" @click="loggedIn = true">Simuleer Login</button>
                                 </div>
                             </template>
 

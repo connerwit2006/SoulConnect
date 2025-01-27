@@ -27,13 +27,18 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $userId = User::where('email', $request->email)->first()->id;
-        $isBlocked = BlockedUser::where('blocked_user_id', $userId)->exists();
+        $formFields = $request->validated();
+
+        $user = User::where('email', $formFields['email'])->first();
+
+        if (!$user) {
+            return back()->withErrors(['email' => 'Ongeldig emailadres of wachtwoord.']);
+        }
+
+        $isBlocked = BlockedUser::where('blocked_user_id', $user->id)->exists();
 
         if ($isBlocked) {
-            $mailController = new MailController();
-            $mailController->sendBlockedUserLoginAttemptMail($request->email);
-
+            app(MailController::class)->sendBlockedUserLoginAttemptMail($formFields['email']);
             return redirect()->route('userBlocked')->with('error', 'Your account has been blocked.');
         }
 
@@ -41,7 +46,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('dashboard'));
     }
 
     /**

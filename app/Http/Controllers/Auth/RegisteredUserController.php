@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use Illuminate\View\View;
+use App\Models\BlockedUser;
+use App\Models\ReportedUser;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
@@ -12,10 +14,19 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 use App\Http\Controllers\MailController;
-use App\Models\BlockedUser;
 
 class RegisteredUserController extends Controller
 {
+    /**
+     * Display the user's dashboard.
+     */
+    public function show(): View
+    {
+        $user = Auth::user();
+
+        return view('pages.dashboard')->with('user', $user);
+    }
+
     /**
      * Display the registration view.
      */
@@ -39,7 +50,7 @@ class RegisteredUserController extends Controller
             'one_liner' => ['required', 'string', 'max:255'],
             'appreciate' => ['required', 'string', 'max:255'],
             'looking_for' => ['required', 'string', 'max:255'],
-            'facecard' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'facecard' => ['nullable', 'max:2048'],
             'gender' => ['required'],
             'looking_for_gender' => ['required'],
             'dob' => ['required', 'date', 'before:-18 years'],
@@ -71,14 +82,21 @@ class RegisteredUserController extends Controller
     {
         $users = User::where('id', '!=', Auth::id())->get();
         $blockedStatuses = [];
+        $reportedUsers = [];
 
         foreach ($users as $user) {
             $blockedStatuses[$user->id] = BlockedUser::where('blocked_user_id', $user->id)->exists();
+
+            $reportedUsers[$user->id] = ReportedUser::where('reported_user_id', $user->id)
+            ->where('user_id', Auth::user()->id)
+            ->exists();
         }
+
 
         return view('pages.users-list')->with([
             'users' => $users,
-            'blockedStatuses' => $blockedStatuses
+            'blockedStatuses' => $blockedStatuses,
+            'reportedUsers' => $reportedUsers
         ]);
     }
 
@@ -86,6 +104,26 @@ class RegisteredUserController extends Controller
     public function showUserBlockedPage()
     {
         return view('pages.user-blocked');
+    }
+
+    // Report User
+    public function reportUser($id): RedirectResponse
+    {
+        $formFields = [];
+        $formFields['user_id'] = Auth::id();
+        $formFields['reported_user_id'] = $id;
+
+        ReportedUser::create($formFields);
+        $timesReported = ReportedUser::where('reported_user_id', '=', $id)->count();
+
+        if ($timesReported >= 3) {
+            BlockedUser::create([
+                'blocked_user_id' => $id,
+                'blocked_by_user_id' => Auth::id()
+            ]);
+        }
+
+        return redirect(route('usersList'))->with('message', 'Gebruiker gerapporteerd!');
     }
 
     // Block User

@@ -25,6 +25,9 @@
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Aangemaakt op
                                 </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actie
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -39,6 +42,18 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-gray-900">{{ $user->created_at }}</div>
                                     </td>
+                                    @if ($reportedUsers[$user->id])
+                                        <td class="px-6 py-4 whitespace-nowrap bg-yellow-600 color-white">
+                                            Gerapporteerd
+                                        </td>
+                                    @else
+                                        <td>
+                                            <a href="{{ route('reportUser', $user->id) }}" class="p-4 bg-yellow-400 hover:bg-yellow-600">
+                                                Rapporteer gebruiker {{ $user->name }}
+                                            </a>
+                                        </td>
+                                    @endif
+                                    
                                     @if (!$blockedStatuses[$user->id])
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <a href="{{ route('blockUser', $user->id) }}" class="p-4 bg-red-400 hover:bg-red-600">

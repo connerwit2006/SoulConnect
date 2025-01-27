@@ -1,7 +1,13 @@
 <x-app-layout>
     <div>
+        @if ($user->email_verified != true)
+            <p>Verifiëer uw emailadres, via de toegestuurde mail</p>
+        @else 
+            <p>Welkom {{ $user->name }}</p>
+        @endif
+
         <!-- Top 5 Matches Showcase -->
-        <x-peopleShowcase
+        {{-- <x-peopleShowcase
             title="Top 5 matches!"
             :people="[
                 ['id' => 1, 'name' => 'Sophie Janssen', 'img' => 'https://randomuser.me/api/portraits/women/1.jpg'],
@@ -22,6 +28,6 @@
                 ['id' => 9, 'name' => 'Emma Smits', 'img' => 'https://randomuser.me/api/portraits/women/9.jpg'],
                 ['id' => 10, 'name' => 'Lucas Visser', 'img' => 'https://randomuser.me/api/portraits/men/10.jpg'],
             ]"
-        />
+        /> --}}
     </div>
 </x-app-layout>
