@@ -3,7 +3,9 @@
         class="relative max-w-full"
         x-data="{
             activeSlide: 0,
-            slides: {{ Js::from($slides) }}
+            slides: {{ Js::from($slides) }},
+            showModal: false,
+            selectedSlide: null,
         }"
     >
         <!-- Slides -->
@@ -11,7 +13,12 @@
             <div
                 x-show="activeSlide === index"
                 class="h-64 sm:h-80 lg:h-96 flex items-center justify-center rounded-lg overflow-hidden">
-                <img :src="slide.image" loading="lazy" class="object-fill w-full h-full" alt="Slide Image">
+                <img
+                    :src="slide.image"
+                    loading="lazy"
+                    class="object-fill w-full h-full cursor-pointer"
+                    alt="Slide Image"
+                    x-on:click="selectedSlide = slide; showModal = true">
             </div>
         </template>
 
@@ -46,6 +53,25 @@
                     x-on:click="activeSlide = index"
                 ></button>
             </template>
+        </div>
+
+        <!-- Pop-up -->
+        <div
+            x-show="showModal"
+            x-cloak
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75"
+            x-on:click.self="showModal = false; selectedSlide = null">
+            <div class="relative bg-white rounded-lg overflow-hidden max-w-full max-h-full">
+                <button
+                    class="absolute top-2 right-2 bg-gray-800 text-white rounded-full w-8 h-8 flex items-center justify-center"
+                    x-on:click="showModal = false; selectedSlide = null">
+                    &times;
+                </button>
+                <img
+                    :src="selectedSlide?.image"
+                    class="object-contain w-auto h-auto max-w-screen max-h-screen"
+                    alt="Selected Image">
+            </div>
         </div>
     </div>
 </div>
