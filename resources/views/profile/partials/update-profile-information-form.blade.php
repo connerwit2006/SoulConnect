@@ -192,25 +192,28 @@
             @endif
         </div>
     </form>
-    <form action="{{ route('gallery.upload') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('gallery.upload') }}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-6">
         @csrf
         <div>
-            <label for="image">Upload Image:</label>
-            <input type="file" name="image" id="image" required>
+            <label for="image" class="block text-sm font-medium text-gray-700">{{ __('Upload Image:') }}</label>
+            <input type="file" name="image" id="image" required class="mt-1 block w-full">
         </div>
-        <button type="submit">Upload</button>
+        <x-primary-button>{{ __('Upload') }}</x-primary-button>
     </form>
-    <h3>Your Gallery</h3>
-    @foreach(auth()->user()->galleries as $gallery)
-        <div>
-            <img src="{{ asset('storage/' . $gallery->image_path) }}" alt="User Image" width="150">
-            <form action="{{ route('gallery.delete', $gallery->id) }}" method="POST"
-                onsubmit="return confirm('Are you sure you want to delete this image?');">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Delete</button>
-            </form>
-        </div>
-    @endforeach
+
+    <h3 class="mt-6 text-lg font-medium text-gray-900">{{ __('Your Gallery') }}</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+        @foreach(auth()->user()->galleries as $gallery)
+            <div class="relative">
+                <img src="{{ asset('storage/' . $gallery->image_path) }}" alt="User Image" class="w-full h-auto object-cover">
+                <form action="{{ route('gallery.delete', $gallery->id) }}" method="POST" class="absolute top-2 right-2"
+                    onsubmit="return confirm('{{ __('Are you sure you want to delete this image?') }}');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 text-white px-2 py-1 text-xs rounded">{{ __('Delete') }}</button>
+                </form>
+            </div>
+        @endforeach
+    </div>
 
 </section>
