@@ -192,4 +192,25 @@
             @endif
         </div>
     </form>
+    <form action="{{ route('gallery.upload') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div>
+            <label for="image">Upload Image:</label>
+            <input type="file" name="image" id="image" required>
+        </div>
+        <button type="submit">Upload</button>
+    </form>
+    <h3>Your Gallery</h3>
+    @foreach(auth()->user()->galleries as $gallery)
+        <div>
+            <img src="{{ asset('storage/' . $gallery->image_path) }}" alt="User Image" width="150">
+            <form action="{{ route('gallery.delete', $gallery->id) }}" method="POST"
+                onsubmit="return confirm('Are you sure you want to delete this image?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    @endforeach
+
 </section>
