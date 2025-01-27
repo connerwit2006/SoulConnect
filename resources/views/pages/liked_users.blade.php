@@ -18,7 +18,7 @@
                 <tbody>
                     @foreach ($likedUsers as $index => $profile)
                         <tr class="liked-row" data-id="{{ $profile->id }}">
-                            <td>{{ $index + 1 }}</td>
+                            <td>{{ ($likedUsers->currentPage() - 1) * $likedUsers->perPage() + $index + 1 }}</td>
                             <td>
                                 <img src="{{ $profile->face_card }}" alt="Profile Picture" class="profile-pic" style="width: 50px; height: 50px; border-radius: 50%;">
                             </td>
@@ -31,41 +31,8 @@
                     @endforeach
                 </tbody>
             </table>
+
+            {{ $likedUsers->links() }}
         @endif
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.revert-like-btn').forEach(button => {
-                button.addEventListener('click', function () {
-                    const profileId = this.dataset.id;
-
-                    fetch('{{ route("like.remove") }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        },
-                        body: JSON.stringify({
-                            liked_user_id: profileId,
-                        }),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            const row = document.querySelector(`.liked-row[data-id="${profileId}"]`);
-                            row.remove();
-
-                            if (!document.querySelectorAll('.liked-row').length) {
-                                location.reload(); // Reload if no users are left
-                            }
-                        } else {
-                            alert('An error occurred: ' + data.message);
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-                });
-            });
-        });
-    </script>
 </x-app-layout>

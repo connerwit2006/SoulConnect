@@ -69,7 +69,7 @@ class LikeController extends Controller
             ->join('likes', 'likes.user_id', '=', 'users.id') // Join the 'likes' table on 'user_id'
             ->where('likes.liked_user_id', $userId) // Filter by the logged-in user being liked
             ->orderByDesc('likes.id') // Order by the most recent like (by 'likes.id')
-            ->get();
+            ->paginate(10);
 
         return view('pages.liked_by', ['likedBy' => $likedBy]);
     }
@@ -147,7 +147,7 @@ class LikeController extends Controller
             ->join('likes', 'likes.liked_user_id', '=', 'users.id') // Join the 'likes' table on 'liked_user_id'
             ->where('likes.user_id', $userId) // Filter by the logged-in user's likes
             ->orderByDesc('likes.id') // Order by the most recent like (by 'likes.id')
-            ->get();
+            ->paginate(10);
 
         return view('pages.liked_users', ['likedUsers' => $likedUsers]);
     }
