@@ -70,12 +70,18 @@ class LikeController extends Controller
 
         $likedBy = User::select('users.*')
             ->join('likes', 'likes.user_id', '=', 'users.id')
-            ->where('likes.liked_user_id', $userId)
+            ->where('likes.liked_user_id', $userId) // Users who liked the logged-in user
+            ->whereNotIn('users.id', function ($query) use ($userId) {
+                $query->select('liked_user_id')
+                    ->from('likes')
+                    ->where('user_id', $userId); // Exclude users the logged-in user has liked back
+            })
             ->orderByDesc('likes.id')
             ->paginate(10);
 
         return view('pages.liked_by', ['likedBy' => $likedBy]);
     }
+
 
     //fetch profiles to put into the like page (excluding profiles that the logged in user liked)
     public function fetchProfiles()

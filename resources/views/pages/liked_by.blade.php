@@ -37,4 +37,66 @@
 
         <p id="no-likes" class="text-muted" style="display: {{ count($likedBy) ? 'none' : 'block' }};">No users have liked you yet.</p>
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Handle "Like Back" button click
+        document.querySelectorAll('.like-back-btn').forEach(button => {
+            button.addEventListener('click', async function () {
+                const userId = this.dataset.id;
+
+                try {
+                    const response = await fetch('/like-back', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({ liked_user_id: userId })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        //alert('Liked back successfully!');
+                        this.closest('tr').remove();
+                    } else {
+                        alert('Something went wrong: ' + result.message);
+                    }
+                } catch (error) {
+                    console.error('Error liking back:', error);
+                }
+            });
+        });
+
+        // Handle "Ignore" button click
+        document.querySelectorAll('.ignore-btn').forEach(button => {
+            button.addEventListener('click', async function () {
+                const userId = this.dataset.id;
+
+                try {
+                    const response = await fetch('/ignore', {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({ liked_user_id: userId })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        alert('User ignored successfully!');
+                        this.closest('tr').remove();
+                    } else {
+                        alert('Something went wrong: ' + result.message);
+                    }
+                } catch (error) {
+                    console.error('Error ignoring user:', error);
+                }
+            });
+        });
+    });
+</script>
+
 </x-app-layout>
