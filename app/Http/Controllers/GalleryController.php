@@ -8,18 +8,18 @@ use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
-    // Store the uploaded image
+    // Slaat image op in de gallerij
     public function store(Request $request)
     {
-        // Validate the incoming image
+        // Afbeelding Validatie
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Store the image
+        // stopt afbeelding in de storage
         $imagePath = $request->file('image')->store('images', 'public');
 
-        // Create a new gallery entry
+        // nieuwe gallerij entry
         $gallery = new Gallery([
             'user_id' => auth()->id(), // assuming you're using authentication
             'image_path' => $imagePath,
@@ -31,15 +31,15 @@ class GalleryController extends Controller
         return redirect()->back()->with('success', 'Image uploaded successfully!');
     }
 
-    // Delete the image from the gallery
+    // Functie die images verwijderd in de gallerij
     public function destroy($id)
     {
         $gallery = Gallery::findOrFail($id);
 
-        // Delete the image file from the storage
+        // Verwijder de image van de storage
         Storage::disk('public')->delete($gallery->image_path);
 
-        // Delete the gallery record
+        // Verwijder gallerij afbeelding
         $gallery->delete();
 
         return redirect()->back()->with('success', 'Image deleted successfully!');
