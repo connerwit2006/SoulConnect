@@ -10,14 +10,15 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up()
-{
-    Schema::create('galleries', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('user_id')->constrained()->onDelete('cascade');
-        $table->string('image_path');
-        $table->timestamps();
-    });
-}
+    {
+        Schema::create('galleries', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('image_path'); // Changed from gallery_path to image_path
+            $table->timestamps();
+        });
+    }
+    
 
 
     /**
