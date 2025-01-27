@@ -15,6 +15,22 @@ use App\Http\Controllers\MailController;
 
 class RegisteredUserController extends Controller
 {
+    public function dashboard()
+    {
+        $users = User::where('id', '!=', Auth::id())->get();
+
+        // format the users to a format that is usable in the front-end
+        $people = $users->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'img' => $user->profile_picture ?? 'https://via.placeholder.com/150',
+            ];
+        })->toArray();
+
+        return view('pages.dashboard')->with(['peopleJson' => json_encode($people)]);
+    }
+
     /**
      * Display the registration view.
      */
@@ -28,7 +44,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-   public function store(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $formFields = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -45,12 +61,12 @@ class RegisteredUserController extends Controller
             'postcode' => ['required', 'string', 'max:255'],
             'relationship_type' => ['required', 'string', 'max:255'],
             'terms' => ['required', 'accepted'],
-        ]);        
+        ]);
 
         $formFields['terms'] = $request->has('terms') ? true : false;
         $formFields['password'] = Hash::make($formFields['password']);
-        $formFields['facecard'] = $request->hasFile('facecard') 
-            ? $request->file('facecard')->store('facecards', 'public') 
+        $formFields['facecard'] = $request->hasFile('facecard')
+            ? $request->file('facecard')->store('facecards', 'public')
             : null;
 
         $user = User::create($formFields);

@@ -1,12 +1,20 @@
 @props(['person' => null])
 
 <section>
-    <div class="xl:mx-auto mx-2 max-w-7xl p-2 sm:p-4 md:p-5 shadow-lg transition-all duration-500 mb-5">
+    <div class="xl:mx-auto mx-2 max-w-7xl p-2 sm:p-4 md:p-5 shadow-lg transition-all duration-500 mb-5 mt-6 rounded-lg border border-gray-200">
         <div class="flex flex-col md:flex-row md:gap-6">
 
             <div class="md:w-1/2 mx-2 md:mx-0">
                 <!-- Placeholder for slideshow -->
-                <img src="{{$person['img']}}" alt="" loading="lazy" class="object-fill">
+                {{--   <img src="{{$person['img']}}" alt="" loading="lazy" class="object-fill">--}}
+                <x-image-carousel :slides="[
+                    ['image' => asset('image/HappyMen.jpg')],
+                    ['image' => asset('image/HappyMen2.jpg')],
+                    ['image' => asset('image/PersonOnPhone.jpg')],
+                    ['image' => asset('image/HappyMen.jpg')],
+                    ['image' => asset('image/HappyMen2.jpg')],
+                    ['image' => asset('image/PersonOnPhone.jpg')]
+            ]" />
             </div>
 
             <!-- Details -->
@@ -76,10 +84,10 @@
 
                     <div class="w-full mt-4 pb-3">
                         <div class="flex space-x-2 mt-2 gap-4 justify-end items-end">
-                            <a href="#" rel="nofollow" class="flex-1 flex justify-center items-center text-white bg-accent py-2 sm:py-2 px-2 sm:px-4 md:py-5 text-md hover:scale-105 transition-transform rounded">
+                            <a href="#" rel="nofollow" class="flex-1 flex justify-center items-center text-white bg-accent py-2 sm:py-2 px-2 sm:px-4 md:py-5 text-md md:hover:scale-105 transition-transform rounded">
                                 Stuur een bericht
                             </a>
-                            <a href="#" rel="nofollow" class="flex-1 flex justify-center items-center text-white bg-zinc-500 opacity-50 py-2 sm:py-2 px-2 md:py-5 sm:px-4 text-md hover:scale-105 transition-transform rounded">
+                            <a href="#" rel="nofollow" class="flex-1 flex justify-center items-center text-white bg-zinc-500 opacity-50 py-2 sm:py-2 px-2 md:py-5 sm:px-4 text-md md:hover:scale-105 transition-transform rounded">
                                 Rapporteer
                             </a>
                         </div>
