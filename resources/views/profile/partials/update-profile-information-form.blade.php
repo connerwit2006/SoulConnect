@@ -19,8 +19,8 @@
         <div>
             <div
                 class="w-32 h-32 rounded-full overflow-hidden border-2 border-gray-300 flex items-center justify-center">
-                <img id="images" src="{{ asset('images/' . $user->face_card) }}" alt="Profile Image"
-                    class="w-full h-full object-cover" />
+                <img id="images" src="{{ asset('images/' . ($user->face_card ? $user->face_card : 'placeholder.webp')) }}" alt="Profile Image" class="w-full h-full object-cover" />
+
             </div>
             <x-input-label for="face_card" :value="__('Afbeelding')" />
             <x-text-input id="face_card" name="face_card" type="file" class="mt-1 block w-full" :value="old('face_card', $user->face_card)" autofocus autocomplete="image" />
@@ -192,25 +192,5 @@
             @endif
         </div>
     </form>
-    <form action="{{ route('gallery.upload') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div>
-            <label for="image">Upload Image:</label>
-            <input type="file" name="image" id="image" required>
-        </div>
-        <button type="submit">Upload</button>
-    </form>
-    <h3>Your Gallery</h3>
-    @foreach(auth()->user()->galleries as $gallery)
-        <div>
-            <img src="{{ asset('storage/' . $gallery->image_path) }}" alt="User Image" width="150">
-            <form action="{{ route('gallery.delete', $gallery->id) }}" method="POST"
-                onsubmit="return confirm('Are you sure you want to delete this image?');">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Delete</button>
-            </form>
-        </div>
-    @endforeach
 
 </section>
