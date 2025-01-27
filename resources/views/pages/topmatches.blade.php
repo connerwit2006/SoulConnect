@@ -1,3 +1,4 @@
+<!--simple view to display the top 5 highest scored users for the logged in user, based on algorithm-->
 <x-app-layout>
     <div class="container">
         <h1>Daily Top 5 Matches</h1>

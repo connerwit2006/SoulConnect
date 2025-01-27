@@ -1,3 +1,4 @@
+<!--simple view to display profiles based on the users information-->
 <x-app-layout>
 <div class="container">
     <h1>Matches</h1>

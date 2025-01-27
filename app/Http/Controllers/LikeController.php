@@ -10,14 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
-    /**
-     * Display 10 profiles for the logged-in user.
-     */
+
+    //fetch users and display them to pages/profiles.blade.php
     public function index(Request $request)
     {
-        $userId = Auth::id(); // Get the currently logged-in user
+        $userId = Auth::id(); // fetch logged in user ID
 
-        // Fetch 10 profiles the user has not interacted with
+        // fetch 10 profiles that the logged in user hasn't interacted with
         $profiles = User::where('id', '!=', $userId)
             ->whereNotIn('id', function ($query) use ($userId) {
                 $query->select('liked_user_id')
@@ -30,9 +29,7 @@ class LikeController extends Controller
         return view('pages.profiles', compact('profiles'));
     }
 
-    /**
-     * Handle like or skip action.
-     */
+    //handle like or skip action
     public function interact(Request $request)
     {
         try {
@@ -45,7 +42,7 @@ class LikeController extends Controller
             $likedUserId = $request->input('liked_user_id');
             $action = $request->input('action');
 
-            // Save the like or skip action
+            // save like or skip action
             DB::table('likes')->insert([
                 'user_id' => $userId,
                 'liked_user_id' => $likedUserId,
@@ -60,22 +57,21 @@ class LikeController extends Controller
         }
     }
 
+    //fetch users who liked the logged in user
     public function likedBy()
     {
-        $userId = auth()->id(); // Get the logged-in user's ID
+        $userId = auth()->id();
 
-        // Fetch users who liked the logged-in user, ordered by the most recent like
-        $likedBy = User::select('users.*') // Select all columns from the 'users' table
-            ->join('likes', 'likes.user_id', '=', 'users.id') // Join the 'likes' table on 'user_id'
-            ->where('likes.liked_user_id', $userId) // Filter by the logged-in user being liked
-            ->orderByDesc('likes.id') // Order by the most recent like (by 'likes.id')
+        $likedBy = User::select('users.*')
+            ->join('likes', 'likes.user_id', '=', 'users.id')
+            ->where('likes.liked_user_id', $userId)
+            ->orderByDesc('likes.id')
             ->paginate(10);
 
         return view('pages.liked_by', ['likedBy' => $likedBy]);
     }
 
-
-
+    //fetch profiles to put into the like page (excluding profiles that the logged in user liked)
     public function fetchProfiles()
     {
         $user = auth()->user();
@@ -92,6 +88,7 @@ class LikeController extends Controller
         ]);
     }
 
+    //like a profile that liked you back
     public function likeBack(Request $request)
     {
         $request->validate([
@@ -101,13 +98,12 @@ class LikeController extends Controller
         $userId = auth()->id();
         $likedUserId = $request->liked_user_id;
 
-        // Check if the like already exists (to avoid duplicates)
+        //check for duplicates
         $existingLike = Like::where('user_id', $userId)
             ->where('liked_user_id', $likedUserId)
             ->first();
 
         if (!$existingLike) {
-            // Create a reciprocal like
             Like::create([
                 'user_id' => $userId,
                 'liked_user_id' => $likedUserId,
@@ -117,6 +113,7 @@ class LikeController extends Controller
         return response()->json(['success' => true]);
     }
 
+    //remove the like that a profile gave the logged in user
     public function ignore(Request $request)
     {
         $request->validate([
@@ -126,7 +123,6 @@ class LikeController extends Controller
         $userId = auth()->id();
         $likedUserId = $request->liked_user_id;
 
-        // Remove the like where the other user liked the current user
         $like = Like::where('user_id', $likedUserId)
             ->where('liked_user_id', $userId)
             ->first();
@@ -138,26 +134,27 @@ class LikeController extends Controller
         return response()->json(['success' => true]);
     }
 
+    //fetch all profiles that the logged in user liked
     public function likedUsers()
     {
-        $userId = auth()->id(); // Get the logged-in user's ID
+        $userId = auth()->id();
 
-        // Fetch users the logged-in user has liked, ordered by the most recent like
-        $likedUsers = User::select('users.*') // Select all columns from the 'users' table
-            ->join('likes', 'likes.liked_user_id', '=', 'users.id') // Join the 'likes' table on 'liked_user_id'
-            ->where('likes.user_id', $userId) // Filter by the logged-in user's likes
-            ->orderByDesc('likes.id') // Order by the most recent like (by 'likes.id')
+        $likedUsers = User::select('users.*')
+            ->join('likes', 'likes.liked_user_id', '=', 'users.id')
+            ->where('likes.user_id', $userId)
+            ->where('likes.status', 'like')
+            ->orderByDesc('likes.id')
             ->paginate(10);
 
         return view('pages.liked_users', ['likedUsers' => $likedUsers]);
     }
 
+    //delete a like that the logged in user gave to a profile
     public function removeLike(Request $request)
     {
         $userId = auth()->id();
         $likedUserId = $request->input('liked_user_id');
 
-        // Find and delete the like
         $like = Like::where('user_id', $userId)
             ->where('liked_user_id', $likedUserId)
             ->first();

@@ -1,3 +1,4 @@
+<!--simple view for profiles that liked the logged in user-->
 <x-app-layout>
     <div class="container">
         <h2>Users Who Liked You</h2>
