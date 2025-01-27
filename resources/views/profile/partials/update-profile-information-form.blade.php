@@ -19,8 +19,8 @@
         <div>
             <div
                 class="w-32 h-32 rounded-full overflow-hidden border-2 border-gray-300 flex items-center justify-center">
-                <img id="images" src="{{ asset('images/' . $user->face_card) }}" alt="Profile Image"
-                    class="w-full h-full object-cover" />
+                <img id="images" src="{{ asset('images/' . ($user->face_card ? $user->face_card : 'placeholder.webp')) }}" alt="Profile Image" class="w-full h-full object-cover" />
+
             </div>
             <x-input-label for="face_card" :value="__('Afbeelding')" />
             <x-text-input id="face_card" name="face_card" type="file" class="mt-1 block w-full" :value="old('face_card', $user->face_card)" autofocus autocomplete="image" />
