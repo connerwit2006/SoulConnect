@@ -31,7 +31,7 @@ class User extends Authenticatable
         'dob',
         'postcode',
         'relationship_type',
-        'terms', 
+        'terms',
         'email_verified',
     ];
 
@@ -56,5 +56,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function likesGiven()
+    {
+        return $this->hasMany(Like::class, 'user_id', 'id');
+    }
+
+    public function likesReceived()
+    {
+        return $this->hasMany(Like::class, 'liked_user_id', 'id');
     }
 }
