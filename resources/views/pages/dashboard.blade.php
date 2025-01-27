@@ -31,3 +31,29 @@
         /> --}}
     </div>
 </x-app-layout>
+
+{{--<x-app-layout>--}}
+{{--    <div>--}}
+{{--        <!-- Top 5 Matches Showcase -->--}}
+{{--        <x-peopleShowcase--}}
+{{--            title="Top 5 matches!"--}}
+{{--            :people="{!! $peopleJson !!}"--}}
+{{--        />--}}
+
+
+
+
+
+{{--        <!-- Potential Matches Showcase -->--}}
+{{--        <x-peopleShowcase--}}
+{{--            title="Potentiële Matches!"--}}
+{{--            :people="[--}}
+{{--                ['id' => 6, 'name' => 'David Willems', 'img' => 'https://randomuser.me/api/portraits/men/6.jpg'],--}}
+{{--                ['id' => 7, 'name' => 'Nina Kuipers', 'img' => 'https://randomuser.me/api/portraits/women/7.jpg'],--}}
+{{--                ['id' => 8, 'name' => 'Jan de Boer', 'img' => 'https://randomuser.me/api/portraits/men/8.jpg'],--}}
+{{--                ['id' => 9, 'name' => 'Emma Smits', 'img' => 'https://randomuser.me/api/portraits/women/9.jpg'],--}}
+{{--                ['id' => 10, 'name' => 'Lucas Visser', 'img' => 'https://randomuser.me/api/portraits/men/10.jpg'],--}}
+{{--            ]"--}}
+{{--        />--}}
+{{--    </div>--}}
+{{--</x-app-layout>--}}
