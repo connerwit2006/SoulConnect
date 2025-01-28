@@ -60,6 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/chat/{receiverId}', [ChatController::class, 'showChat'])->name('chat.show');
     Route::get('/chat/{receiverId}/fetch', [ChatController::class, 'fetchMessages'])->name('chat.fetchMessages');
     Route::post('/chat/{receiverId}/send', [ChatController::class, 'sendMessage'])->name('chat.sendMessage');
+    Route::get('chat/{receiverId}', [ChatController::class, 'showChat'])->name('chat.showChat');
+
 });
 
 // Register User Page

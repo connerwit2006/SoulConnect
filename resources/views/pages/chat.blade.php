@@ -49,7 +49,11 @@
             console.error("Sender is undefined or missing nickname for message:", message);
         }
     });
+
+    // Scroll to the bottom of the chat box
+    messagesContainer.scrollTop(messagesContainer[0].scrollHeight);
 }
+
 
                 });
             }

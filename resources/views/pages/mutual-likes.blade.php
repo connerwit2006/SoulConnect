@@ -22,8 +22,8 @@
                     <td>{{ $profile->nickname }}</td>
                     <td>{{ $profile->one_liner }}</td>
                     <td>
-                        <!-- Button to go to the chat page -->
-                        <a href="#">Chat</a>
+                        <!-- Chat button that redirects to the specific user's chat page -->
+                        <a href="{{ route('chat.showChat', $profile->id) }}" class="btn btn-primary">Chat</a>
                     </td>
                 </tr>
                 @endforeach
