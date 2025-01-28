@@ -10,17 +10,18 @@
     >
         <!-- Slides -->
         <template x-for="(slide, index) in slides" :key="index">
-            <div
-                x-show="activeSlide === index"
-                class="h-64 sm:h-80 lg:h-96 flex items-center justify-center rounded-lg overflow-hidden">
+            <div x-show="activeSlide === index"
+                    class="h-64 sm:h-80 lg:h-96 flex items-center justify-center rounded-lg overflow-hidden">
                 <img
                     :src="slide.image"
                     loading="lazy"
-                    class="object-fill w-full h-full cursor-pointer"
+                    class="object-cover w-full h-full cursor-pointer"
                     alt="Slide Image"
-                    x-on:click="selectedSlide = slide; showModal = true">
+                    x-on:click="selectedSlide = slide; showModal = true"
+                >
             </div>
         </template>
+
 
         <!-- Prev/Next Arrows -->
         <div class="absolute top-0 left-0 w-full h-full z-40 pointer-events-none">
@@ -55,7 +56,7 @@
             </template>
         </div>
 
-        <!-- Pop-up -->
+        <!-- ZOOM -->
         <div
             x-show="showModal"
             x-cloak
@@ -70,7 +71,8 @@
                 <img
                     :src="selectedSlide?.image"
                     class="object-contain w-auto h-auto max-w-screen max-h-screen"
-                    alt="Selected Image">
+                    alt="Selected Image"
+                >
             </div>
         </div>
     </div>
