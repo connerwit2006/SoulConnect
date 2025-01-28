@@ -74,4 +74,9 @@ Route::get('/email/verify/{id}', [MailController::class, 'verifyEmail'])->name('
 // Show User Blocked Page
 Route::get('/user/blocked', [RegisteredUserController::class, 'showUserBlockedPage'])->name('userBlocked');
 
+// Show Terms
+Route::get('/terms', function () {
+    return view('pages.terms');
+});
+
 require __DIR__.'/auth.php';

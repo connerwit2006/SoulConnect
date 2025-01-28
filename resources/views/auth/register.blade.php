@@ -124,8 +124,8 @@
         <!-- Terms -->
         <div class="mt-2">
             <label class="inline-flex items-center">
-                <input type="checkbox" name="terms" value="1" required class="form-checkbox text-indigo-600">
-                <span class="ml-2 text-sm text-gray-600">{{ __('Ik ga akkoord met de voorwaarden') }}</span>
+                <input type="checkbox" name="terms" value="1" required class="form-checkbox text-accent">
+                <a href="/terms" class="ml-2 text-sm text-gray-600 md:hover:underline md:hover:text-accent">{{ __('Ik ga akkoord met de voorwaarden') }}</a>
             </label>
             <x-input-error :messages="$errors->get('terms')" class="mt-2" />
         </div>
