@@ -185,4 +185,23 @@ class LikeController extends Controller
             'message' => 'Like not found.',
         ], 404);
     }
+
+    public function mutualLikes()
+    {
+        $userId = auth()->id();
+
+        // Get users that the logged-in user has liked and who have also liked them back
+        $mutualLikes = User::select('users.*')
+            ->join('likes', 'likes.liked_user_id', '=', 'users.id')
+            ->where('likes.user_id', $userId)
+            ->whereIn('users.id', function ($query) use ($userId) {
+                $query->select('liked_user_id')
+                    ->from('likes')
+                    ->where('user_id', $userId);
+            })
+            ->orderByDesc('likes.id')
+            ->paginate(10); // Paginate the results
+
+        return view('pages.mutual-likes', compact('mutualLikes'));
+    }
 }
