@@ -12,69 +12,52 @@
                     {{ __("Een lijst van alle gebruikers (excl. ingelogde gebruiker)") }}
                 </div>
 
-                <div>
-                    <!-- Apply bg-bg2 to the table itself and its sections (thead, tbody, tr) -->
-                    <table class="min-w-full divide-y divide-gray-200 bg-bg2">
-                        <thead class="bg-bg2">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Naam
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Email
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Aangemaakt op
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Actie
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-bg2 divide-y divide-gray-200">
-                            @foreach ($users as $user)
-                                <tr class="bg-bg2">
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ $user->name }}</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ $user->email }}</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ $user->created_at }}</div>
-                                    </td>
-                                    @if ($reportedUsers[$user->id])
-                                        <td class="px-6 py-4 whitespace-nowrap bg-yellow-600 text-white rounded-lg">
-                                            Gerapporteerd
-                                        </td>
-                                    @else
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{ route('reportUser', $user->id) }}" class="inline-block px-6 py-2 bg-yellow-500 text-white rounded-lg shadow-lg hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-300">
-                                                Rapporteer gebruiker
-                                            </a>
-                                        </td>
-                                    @endif
-                                  
-                                    @if (!$blockedStatuses[$user->id])
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{ route('blockUser', $user->id) }}" class="inline-block px-6 py-2 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
-                                                Blokkeer gebruiker
-                                            </a>
-                                        </td>
-                                    @else
-                                        <td class="px-6 py-4 whitespace-nowrap bg-red-600 text-white rounded-lg">
-                                            Geblokkeerd
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <a href="{{ route('unblockUser', $user->id) }}" class="inline-block px-6 py-2 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
-                                                Deblokkeer gebruiker
-                                            </a>
-                                        </td>
-                                    @endif
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div class="space-y-0"> <!-- Set space between items to 0 -->
+                    <!-- Container for each user -->
+                    @foreach ($users as $user)
+                        <div class="flex items-center bg-bg2 p-3 mb-0"> <!-- Removed rounded-lg from div -->
+                            <!-- Name -->
+                            <div class="flex-1 text-sm text-gray-900">
+                                {{ $user->name }}
+                            </div>
+                            <!-- Email -->
+                            <div class="flex-1 text-sm text-gray-900">
+                                {{ $user->email }}
+                            </div>
+                            <!-- Created At -->
+                            <div class="flex-1 text-sm text-gray-900">
+                                {{ $user->created_at }}
+                            </div>
+
+                            <!-- Action Buttons (container) -->
+                            <div class="flex items-center space-x-2">
+                                <!-- Report Button -->
+                                @if ($reportedUsers[$user->id])
+                                    <div class="px-4 py-2 bg-yellow-600 text-white rounded-lg">
+                                        Gerapporteerd
+                                    </div>
+                                @else
+                                    <a href="{{ route('reportUser', $user->id) }}" class="inline-block px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-lg hover:bg-yellow-600 focus:outline-none focus:ring-yellow-300">
+                                        Rapporteer gebruiker
+                                    </a>
+                                @endif
+
+                                <!-- Block/Unblock Button -->
+                                @if (!$blockedStatuses[$user->id])
+                                    <a href="{{ route('blockUser', $user->id) }}" class="inline-block px-4 py-2 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
+                                        Blokkeer gebruiker
+                                    </a>
+                                @else
+                                    <div class="px-4 py-2 bg-red-600 text-white rounded-lg">
+                                        Geblokkeerd
+                                    </div>
+                                    <a href="{{ route('unblockUser', $user->id) }}" class="inline-block px-4 py-2 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                                        Deblokkeer gebruiker
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
