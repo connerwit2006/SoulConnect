@@ -12,10 +12,10 @@
                     {{ __("Een lijst van alle gebruikers (excl. ingelogde gebruiker)") }}
                 </div>
 
-                <div class="space-y-0"> <!-- Set space between items to 0 -->
+                <div class="divide-y divide-gray-300"> <!-- Removed extra whitespace by adding divide-y -->
                     <!-- Container for each user -->
                     @foreach ($users as $user)
-                        <div class="flex items-center bg-bg2 p-3 mb-0"> <!-- Removed rounded-lg from div -->
+                        <div class="flex flex-col sm:flex-row sm:items-center bg-bg2 p-3 space-y-2 sm:space-y-0 sm:space-x-4"> <!-- Adjusted for responsive stacking -->
                             <!-- Name -->
                             <div class="flex-1 text-sm text-gray-900">
                                 {{ $user->name }}
@@ -30,28 +30,28 @@
                             </div>
 
                             <!-- Action Buttons (container) -->
-                            <div class="flex items-center space-x-2">
+                            <div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2"> <!-- Adjusted for responsive stacking -->
                                 <!-- Report Button -->
                                 @if ($reportedUsers[$user->id])
-                                    <div class="px-4 py-2 bg-yellow-600 text-white rounded-lg">
+                                    <div class="px-4 py-2 bg-yellow-600 text-white rounded-lg text-center">
                                         Gerapporteerd
                                     </div>
                                 @else
-                                    <a href="{{ route('reportUser', $user->id) }}" class="inline-block px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-lg hover:bg-yellow-600 focus:outline-none focus:ring-yellow-300">
+                                    <a href="{{ route('reportUser', $user->id) }}" class="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-lg hover:bg-yellow-600 focus:outline-none focus:ring-yellow-300 transition-all duration-200 ease-in-out text-center">
                                         Rapporteer gebruiker
                                     </a>
                                 @endif
 
                                 <!-- Block/Unblock Button -->
                                 @if (!$blockedStatuses[$user->id])
-                                    <a href="{{ route('blockUser', $user->id) }}" class="inline-block px-4 py-2 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
+                                    <a href="{{ route('blockUser', $user->id) }}" class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600 focus:outline-none focus:ring-red-300 transition-all duration-200 ease-in-out text-center">
                                         Blokkeer gebruiker
                                     </a>
                                 @else
-                                    <div class="px-4 py-2 bg-red-600 text-white rounded-lg">
+                                    <div class="px-4 py-2 bg-red-600 text-white rounded-lg text-center">
                                         Geblokkeerd
                                     </div>
-                                    <a href="{{ route('unblockUser', $user->id) }}" class="inline-block px-4 py-2 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+                                    <a href="{{ route('unblockUser', $user->id) }}" class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 focus:outline-none focus:ring-green-300 transition-all duration-200 ease-in-out text-center">
                                         Deblokkeer gebruiker
                                     </a>
                                 @endif
