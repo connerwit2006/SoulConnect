@@ -5,7 +5,7 @@
         <div class="mx-auto sm:px-6 lg:px-8 mb-6">
             <div class="overflow-hidden shadow-md rounded-lg">
                 <div class="text-2xl p-3 text-white bg-accent">
-                  {{ $title }}
+                    {{ $title }}
                 </div>
             </div>
         </div>

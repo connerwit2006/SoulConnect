@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -96,5 +97,41 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function show($id): View
+    {
+        $user = User::findOrFail($id);
+
+        $person = [
+            'id' => $user->id,
+            'name' => $user->nickname,
+            'age' => \Carbon\Carbon::parse($user->dob)->age,
+            'location' => $user->postcode,
+            'gender' => $user->gender,
+            'description' => $user->one_liner,
+            'img' => $user->face_card ? asset('images/' . $user->face_card) : 'default_image_url',
+        ];
+
+        $slides = [
+            ['image' => asset('image/HappyMen.jpg')],
+            ['image' => asset('image/HappyMen2.jpg')],
+            ['image' => asset('image/PersonOnPhone.jpg')],
+        ];
+
+        // Fetch dynamic potential matches
+        $matches = User::where('id', '!=', $id)
+            ->inRandomOrder()
+            ->take(5)
+            ->get()
+            ->map(function ($match) {
+                return [
+                    'id' => $match->id,
+                    'name' => $match->nickname,
+                    'img' => $match->face_card ? asset('images/' . $match->face_card) : 'default_image_url',
+                ];
+            });
+
+        return view('pages.profileDetail', compact('person', 'slides', 'matches'));
     }
 }

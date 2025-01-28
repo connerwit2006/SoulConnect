@@ -35,13 +35,23 @@
         <!-- Top 5 Matches Showcase -->
         <x-peopleShowcase
             title="Top 5 matches!"
-            :people="$people"
+            :people="$topMatches->map(fn($match) => [
+                'id' => $match['id'],
+                'name' => $match['nickname'],
+                'description' => $match['oneliner'],
+                'img' => $match['facecard']
+            ])->toArray()"
         />
 
         <!-- Potential Matches Showcase -->
         <x-peopleShowcase
             title="Potentiële Matches!"
-            :people="$people"
+            :people="$potentialMatches->map(fn($match) => [
+                'id' => $match['id'],
+                'name' => $match['nickname'],
+                'description' => $match['oneliner'],
+                'img' => $match['facecard']
+            ])->toArray()"
         />
     </div>
 </x-app-layout>

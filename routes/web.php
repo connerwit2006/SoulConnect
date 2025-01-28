@@ -12,14 +12,16 @@ Route::get('/', function () {
     return view('pages.welcome');
 });
 
+/**
 Route::get('/detail/{id}', function ($id) {
     return view('pages.profileDetail', ['id' => $id]);
 });
+ */
 
-Route::get('/profile/{id}', [ProfileController::class, 'show'])->middleware('auth')->name('profile.show');
+Route::get('/detail/{id}', [ProfileController::class, 'show'])->name('profile.show');
 
 // Show Dashboard
-Route::get('/dashboard', [RegisteredUserController::class, 'dashboard'])->middleware('auth')->name('dashboard');
+Route::get('/dashboard', [MatchingController::class, 'dashboard'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -27,7 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/gallery/upload', [GalleryController::class, 'store'])->name('gallery.upload');
     Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.delete');
-
+    Route::get('/profile/{id}', [MatchingController::class, 'profileDetail'])->name('profile.detail');
 
     //like system routes
     Route::get('/profiles', [LikeController::class, 'index'])->name('profiles.index');

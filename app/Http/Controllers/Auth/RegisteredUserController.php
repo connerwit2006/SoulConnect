@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
                 'img' => $user->profile_picture ?? 'https://via.placeholder.com/150',
             ];
         })->toArray();
-
+        
 // dd($people); // Debug als nodig
 
         return view('pages.dashboard')->with([

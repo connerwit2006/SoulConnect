@@ -122,4 +122,89 @@ class MatchingController extends Controller
         // Pass only the top 5 matches to the view
         return view('pages.topmatches', ['matches' => $sortedMatches->take(5)]);
     }
+
+    public function dashboard(Request $request)
+    {
+        $userId = $request->user()->id;
+        $user = User::findOrFail($userId);
+
+        // Filter out the logged-in user
+        $otherUsers = User::where('id', '!=', $userId)->get();
+
+        // Check which users have already been liked by the current user
+        $likedUserIds = Like::where('user_id', $userId)->pluck('liked_user_id')->toArray();
+
+        // Calculate matches
+        $matches = $otherUsers->map(function ($otherUser) use ($user, $likedUserIds) {
+            $matchScore = $this->calculateMatchScore($user, $otherUser);
+
+            return [
+                'id' => $otherUser->id,
+                'facecard' => $otherUser->face_card ? asset('images/' . $otherUser->face_card) : 'https://via.placeholder.com/150',
+                'nickname' => $otherUser->nickname,
+                'oneliner' => $otherUser->one_liner,
+            ];
+        });
+
+        // Sort matches by score in descending order
+        $sortedMatches = $matches->sortByDesc('score')->values();
+
+        // Split into top 5 matches and potential matches
+        $topMatches = $sortedMatches->take(5);
+        $potentialMatches = $sortedMatches->slice(5);
+
+        // Return the data to the dashboard view
+        return view('pages.dashboard', [
+            'topMatches' => $topMatches,
+            'potentialMatches' => $potentialMatches,
+        ]);
+    }
+
+    public function profileDetail(Request $request, $id)
+    {
+        $user = User::findOrFail($request->user()->id);
+        $selectedProfile = User::findOrFail($id); // Ensure this is correct
+
+        // Prepare profile data for the view
+        $person = [
+            'id' => $selectedProfile->id,
+            'name' => $selectedProfile->nickname ?? 'No Name',
+            'age' => $selectedProfile->dob ? \Carbon\Carbon::parse($selectedProfile->dob)->age : 'Unknown Age',
+            'location' => $selectedProfile->postcode ?? 'Unknown Location',
+            'gender' => $selectedProfile->gender ?? 'Unknown Gender',
+            'description' => $selectedProfile->one_liner ?? 'No description available',
+            'img' => $selectedProfile->face_card
+                ? asset('images/' . $selectedProfile->face_card)
+                : 'https://via.placeholder.com/150',
+        ];
+
+        $slides = [
+            ['image' => asset('image/HappyMen.jpg')],
+            ['image' => asset('image/HappyMen2.jpg')],
+            ['image' => asset('image/PersonOnPhone.jpg')],
+        ];
+
+        // Generate random matches
+        $otherUsers = User::where('id', '!=', $user->id)->get();
+        $potentialMatches = $otherUsers->map(function ($otherUser) use ($user) {
+            return [
+                'id' => $otherUser->id,
+                'facecard' => $otherUser->face_card
+                    ? asset('images/' . $otherUser->face_card)
+                    : 'https://via.placeholder.com/150',
+                'nickname' => $otherUser->nickname ?? 'No Nickname',
+                'oneliner' => $otherUser->one_liner ?? 'No Oneliner',
+            ];
+        });
+
+        $matches = $potentialMatches->shuffle()->take(5)->map(function ($person) {
+            return [
+                'id' => $person['id'],
+                'img' => $person['facecard'] ?? 'https://via.placeholder.com/150',
+                'name' => $person['nickname'] ?? 'No Nickname',
+            ];
+        });
+
+        return view('pages.profileDetail', compact('person', 'slides', 'matches'));
+    }
 }
