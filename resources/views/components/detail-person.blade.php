@@ -19,7 +19,7 @@
             <div class="md:w-1/2 md:py-4 mt-3 md:mt-0 mx-2 md:mx-0">
                 <div class="flex items-center justify-between text-gray-700 text-2xl title-font tracking-widest mb-4">
                     <h1 class="text-2xl title-font tracking-widest">{{ $person['name'] }}</h1>
-                    <h2 class="text-lg tracking-widest">{{ $person['location'] }}</h2>
+                    <h2 class="text-lg tracking-widest">Postcode: {{ $person['location'] }}</h2>
                 </div>
 
                 <div class="flex flex-col gap-y-2">

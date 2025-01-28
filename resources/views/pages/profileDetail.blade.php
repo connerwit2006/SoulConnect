@@ -2,7 +2,12 @@
     <!-- Person Details -->
     <x-detail-person
         :person="$person"
-        :slides="$slides"
+        :slides="[
+            ['image' => asset('image/Detail1.jpg')],
+            ['image' => asset('image/Detail2.jpg')],
+            ['image' => asset('image/Detail4.jpg')],
+            ['image' => asset('image/Detail3.jpg')]
+        ]"
     />
 
     <!-- Potential Matches Showcase -->

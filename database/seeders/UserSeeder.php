@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
                 'email' => $faker->unique()->safeEmail,
                 'password' => Hash::make('password'),
                 'nickname' => $faker->unique()->userName ?? 'guest_' . $i,
-                'one_liner' => $faker->sentence(6),
+                'one_liner' => $faker->sentence(22),
                 'appreciate' => $faker->words(3, true),
                 'looking_for' => $faker->sentence(4),
                 'face_card' => $faker->imageUrl(150, 150, 'people'),

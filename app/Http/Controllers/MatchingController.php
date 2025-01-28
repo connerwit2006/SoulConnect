@@ -151,7 +151,7 @@ class MatchingController extends Controller
 
         // Split into top 5 matches and potential matches
         $topMatches = $sortedMatches->take(5);
-        $potentialMatches = $sortedMatches->slice(5);
+        $potentialMatches = $sortedMatches->slice(5)->take(10);
 
         // Return the data to the dashboard view
         return view('pages.dashboard', [
