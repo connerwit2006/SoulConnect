@@ -1,7 +1,7 @@
 @props(['person' => null, 'slides' => []])
 
-<section>
-    <div class="xl:mx-auto mx-2 max-w-7xl p-2 sm:p-4 md:p-5 shadow-lg transition-all duration-500 mb-5 mt-6 rounded-lg border border-gray-200">
+<section class="pt-12">
+    <div class="xl:mx-auto mx-2 max-w-7xl p-2 sm:p-4 md:p-5 shadow-lg transition-all duration-500 mb-5 rounded-lg border border-gray-200">
         <div class="flex flex-col md:flex-row md:gap-6">
 
             <!-- Image Carousel -->

@@ -34,10 +34,14 @@ class RegisteredUserController extends Controller
             ];
         })->toArray();
 
+// dd($people); // Debug als nodig
+
         return view('pages.dashboard')->with([
-            'peopleJson' => json_encode($people),
+            'people' => $people,
             'loggedInUser' => $loggedInUser,
         ]);
+
+
     }
 
     /**

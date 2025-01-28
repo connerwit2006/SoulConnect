@@ -1,7 +1,7 @@
 <x-app-layout>
-    <div class="container mx-auto px-4 mt-10 max-w-6xl">
+    <div class="container mx-auto px-4 pt-12 max-w-6xl">
         <!-- Title -->
-        <h1 class="text-4xl font-bold text-center mb-12 text-gray-800">Vind je perfecte match vandaag!</h1>
+        <h1 class="text-4xl font-bold text-center mb-12 text-gray-700">Vind je perfecte match vandaag!</h1>
 
         <!-- Homepage Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 pb-20">
@@ -20,8 +20,19 @@
                         <p class="text-gray-700 text-base leading-relaxed">
                             Maak een gratis account aan en ontdek jouw perfecte match. Vul je profiel in en ontvang gepersonaliseerde matches op basis van jouw voorkeuren. Begin vandaag nog en laat het algoritme voor jou werken. Vind iemand die perfect bij jou past en maak jouw datingervaring onvergetelijk.                        </p>
                         <div class="mt-4 flex justify-center gap-3">
-                            <a href="/login" class="bg-accent text-white font-medium py-2 px-6 rounded hover:scale-105 transition-transform">Inloggen</a>
-                            <a href="/register" class="bg-accent text-white font-medium py-2 px-6 rounded hover:scale-105 transition-transform">Registreren</a>
+                            @auth
+                                <div class="relative">
+                                    <!-- User Name with Dropdown Arrow -->
+                                    <a href="{{ route('dashboard') }}" class="flex items-center gap-2 bg-accent px-5 py-2 rounded-md text-white">
+                                        Dashboard
+                                    </a>
+                                </div>
+                            @else
+                                <div class="flex gap-4">
+                                    <a href="/login" class="bg-accent text-white font-medium py-2 px-6 rounded hover:scale-105 transition-transform">Inloggen</a>
+                                    <a href="/register" class="bg-accent text-white font-medium py-2 px-6 rounded hover:scale-105 transition-transform">Registreren</a>
+                                </div>
+                            @endauth
                         </div>
                     </div>
                 </div>

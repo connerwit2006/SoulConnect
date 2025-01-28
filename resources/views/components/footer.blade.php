@@ -33,7 +33,7 @@
 
             <!-- All Rights Reserved -->
             <span class="text-lg text-gray-500 text-center block">
-                <a href="https://pagedone.io/" class="hover:underline hover:text-accent">SoulConnect 2025, All rights reserved.</a>
+                <a href="" class="hover:underline hover:text-accent">SoulConnect 2025, All rights reserved.</a>
             </span>
 
         </div>
