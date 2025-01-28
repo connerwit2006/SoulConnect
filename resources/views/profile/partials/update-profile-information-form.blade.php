@@ -184,9 +184,9 @@
             @endif
         </div>
         <div class="flex items-center gap-4">
-            <x-primary-button class="px-6 py-2 bg-pink-400 text-white text-sm font-medium rounded-lg shadow-md hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+            <button class="px-6 py-2 bg-pink-400 text-white text-sm font-medium rounded-lg shadow-md hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                 {{ __('Save') }}
-            </x-primary-button>
+            <button>
         
             @if (session('status') === 'profile-updated')
                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"

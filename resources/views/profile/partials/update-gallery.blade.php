@@ -24,8 +24,8 @@
         <!-- Display the error messages using the input-error component -->
         <x-input-error class="mt-2" :messages="$errors->get('image')" />
     </div>
-    <x-primary-button class="px-6 py-2 bg-pink-400 text-white text-sm font-medium rounded-lg shadow-md hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+    <button class="px-6 py-2 bg-pink-400 text-white text-sm font-medium rounded-lg shadow-md hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
         {{ __('Upload') }}
-    </x-primary-button>
+    </button>
 </form>
 
