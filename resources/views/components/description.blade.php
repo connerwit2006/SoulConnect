@@ -23,11 +23,11 @@
             if (description.style.webkitLineClamp === "3" || description.style.webkitLineClamp === "") {
                 description.style.webkitLineClamp = "unset";
                 description.style.maxHeight = "none";
-                this.textContent = "Read Less";
+                this.textContent = "Minder lezen...";
             } else {
                 description.style.webkitLineClamp = "3";
                 description.style.maxHeight = "4.5em";
-                this.textContent = "Read More";
+                this.textContent = "Verder lezen...";
             }
         });
     });
