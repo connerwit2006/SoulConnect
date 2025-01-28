@@ -21,7 +21,7 @@
                         <tr class="border-t hover:bg-gray-50 transition" data-id="{{ $profile->id }}">
                             <td class="px-6 py-4">{{ ($likedUsers->currentPage() - 1) * $likedUsers->perPage() + $index + 1 }}</td>
                             <td class="px-6 py-4">
-                                <img src="{{ $profile->face_card }}" alt="Profile Picture"
+                                <img src="image/Detail2.jpg" alt="Profile Picture"
                                     class="w-12 h-12 rounded-full object-cover border border-gray-300">
                             </td>
                             <td class="px-6 py-4">{{ $profile->nickname }}</td>

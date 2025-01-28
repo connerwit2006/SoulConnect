@@ -39,7 +39,7 @@
                 'id' => $match['id'],
                 'name' => $match['nickname'],
                 'description' => $match['oneliner'],
-                'img' => $match['facecard']
+                'img' => 'image/HomePage3.jpg'
             ])->toArray()"
         />
 
@@ -50,7 +50,7 @@
                 'id' => $match['id'],
                 'name' => $match['nickname'],
                 'description' => $match['oneliner'],
-                'img' => $match['facecard']
+                'img' => 'image/Detail3.jpg'
             ])->toArray()"
         />
     </div>

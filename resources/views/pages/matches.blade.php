@@ -20,7 +20,7 @@
                     @foreach ($matches as $match)
                         <tr class="border-t hover:bg-gray-50 transition">
                             <td class="px-6 py-4">
-                                <img src="{{ $match['facecard'] ?? 'default-image.jpg' }}" alt="Profile Picture"
+                                <img src="image/Detail1.jpg" alt="Profile Picture"
                                     class="w-12 h-12 rounded-full object-cover border border-gray-300">
                             </td>
                             <td class="px-6 py-4">{{ $match['nickname'] }}</td>
