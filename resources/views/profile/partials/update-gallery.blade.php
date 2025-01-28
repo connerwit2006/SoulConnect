@@ -18,6 +18,10 @@
     <div>
         <label for="image" class="block text-sm font-medium text-gray-700">{{ __('Upload Image:') }}</label>
         <input type="file" name="image" id="image" required class="mt-1 block w-full">
+        
+        <!-- Display the error messages using the input-error component -->
+        <x-input-error class="mt-2" :messages="$errors->get('image')" />
     </div>
     <x-primary-button>{{ __('Upload') }}</x-primary-button>
 </form>
+
