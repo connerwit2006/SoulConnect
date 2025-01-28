@@ -35,11 +35,11 @@
                             <td class="px-6 py-4 text-center space-x-2 space-y-2">
                                 <button class="bg-accent text-white font-medium py-2 px-4 rounded-lg like-back-btn hover:scale-105 transition-transform"
                                     data-id="{{ $profile->id }}">
-                                    Like Back
+                                    Like Terug
                                 </button>
                                 <button class="bg-red-500 text-white font-medium py-2 px-4 rounded-lg ignore-btn transition-transform"
                                     data-id="{{ $profile->id }}">
-                                    Ignore
+                                    Negeer
                                 </button>
                             </td>
                         </tr>
