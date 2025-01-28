@@ -7,6 +7,9 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MatchingController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\ChatController;
 
 Route::get('/', function () {
     return view('pages.welcome');
@@ -40,11 +43,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/ignore', [LikeController::class, 'ignore'])->name('like.ignore');
     Route::get('/liked-users', [LikeController::class, 'likedUsers'])->name('like.likedUsers');
     Route::post('/like/remove', [LikeController::class, 'removeLike'])->name('like.remove');
-
+    Route::get('/mutual-likes', [LikeController::class, 'mutualLikes'])->name('mutual.likes');
 
     //match system routes
-    Route::get('/matches', [MatchingController::class, 'findMatches'])->name('matches.index');
-    Route::get('/topmatches', [MatchingController::class, 'findTopMatches'])->name('matches.top');
+    Route::get('/matches', [MatchingController::class, 'findMatches']);
+    Route::get('/topmatches', [MatchingController::class, 'findTopMatches']);
+
+    //payment system routes 
+    Route::get('/payment', [PaymentController::class, 'showPaymentPage'])->name('payment.page');
+    Route::post('/payment', [PaymentController::class, 'processPayment'])->name('payment.process');
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+
+    //chat system routes
+    Route::get('/chat/{receiverId}', [ChatController::class, 'showChat'])->name('chat.show');
+    Route::get('/chat/{receiverId}/fetch', [ChatController::class, 'fetchMessages'])->name('chat.fetchMessages');
+    Route::post('/chat/{receiverId}/send', [ChatController::class, 'sendMessage'])->name('chat.sendMessage');
+    Route::get('chat/{receiverId}', [ChatController::class, 'showChat'])->name('chat.showChat');
 
     // Get Users List
     Route::get('/users/list', [RegisteredUserController::class, 'fetchUsersList'])->name('usersList');
