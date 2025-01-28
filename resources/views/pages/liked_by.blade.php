@@ -37,7 +37,7 @@
                                     data-id="{{ $profile->id }}">
                                     Like Terug
                                 </button>
-                                <button class="bg-red-500 text-white font-medium py-2 px-4 rounded-lg ignore-btn transition-transform"
+                                <button class="bg-red-500 text-white font-medium py-2 px-4 rounded-lg ignore-btn hover:scale-105 transition-transform"
                                     data-id="{{ $profile->id }}">
                                     Negeer
                                 </button>
