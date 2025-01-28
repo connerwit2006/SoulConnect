@@ -9,7 +9,7 @@
             <div class="flex justify-center">
                 <div class="flex flex-col w-full max-w-md rounded-xl border border-gray-200 bg-white shadow-lg">
                     <div class="aspect-w-16 aspect-h-9">
-                        <img src="image/PersonOnPhone.jpg" loading="lazy" alt="Person on Phone" class="w-full h-full object-contain rounded-t-xl" />
+                        <img src="image/HomePage2.jpg" loading="lazy" alt="Person on Phone" class="w-full h-full object-contain rounded-t-xl" />
                         <p class="sr-only">
                             Afbeelding ontworpen door <a href="https://www.freepik.com/wayhomestudio" target="_blank" rel="noopener noreferrer">wayhomestudio</a> op <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer">Freepik</a>.
                         </p>
@@ -42,7 +42,7 @@
             <div class="flex justify-center">
                 <div class="flex flex-col w-full max-w-md rounded-xl border border-gray-200 bg-white shadow-lg">
                     <div class="aspect-w-16 aspect-h-9">
-                        <img src="image/HappyMen.jpg" loading="lazy" alt="Person Pointing" class="w-full h-full object-contain rounded-t-xl" />
+                        <img src="image/Detail4.jpg" loading="lazy" alt="Person Pointing" class="w-full h-full object-contain rounded-t-xl" />
                         <p class="sr-only">
                             Afbeelding ontworpen door <a href="https://www.freepik.com/wayhomestudio" target="_blank" rel="noopener noreferrer">wayhomestudio</a> op <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer">Freepik</a>.
                         </p>
@@ -67,7 +67,7 @@
             <div class="flex justify-center">
                 <div class="flex flex-col w-full max-w-md rounded-xl border border-gray-200 bg-white shadow-lg">
                     <div class="aspect-w-16 aspect-h-9">
-                        <img src="image/HappyMen2.jpg" loading="lazy" alt="Person Smiling" class="w-full h-full object-contain rounded-t-xl" />
+                        <img src="image/HomePage1.jpg" loading="lazy" alt="Person Smiling" class="w-full h-full object-contain rounded-t-xl" />
                         <p class="sr-only">
                             Afbeelding ontworpen door <a href="https://www.freepik.com/wayhomestudio" target="_blank" rel="noopener noreferrer">wayhomestudio</a> op <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer">Freepik</a>.
                         </p>
@@ -91,7 +91,7 @@
             <div class="flex justify-center">
                 <div class="flex flex-col w-full max-w-md rounded-xl border border-gray-200 bg-white shadow-lg">
                     <div class="aspect-w-16 aspect-h-9">
-                        <img src="image/PersonPointingToPhone.jpg" loading="lazy" alt="Person Relaxing" class="w-full h-full object-contain rounded-t-xl" />
+                        <img src="image/HomePage3.jpg" loading="lazy" alt="Person Relaxing" class="w-full h-full object-contain rounded-t-xl" />
                         <p class="sr-only">
                             Afbeelding ontworpen door <a href="https://www.freepik.com/wayhomestudio" target="_blank" rel="noopener noreferrer">wayhomestudio</a> op <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer">Freepik</a>.
                         </p>

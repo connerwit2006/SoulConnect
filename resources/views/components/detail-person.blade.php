@@ -7,6 +7,12 @@
             <!-- Image Carousel -->
             <div class="md:w-1/2 mx-2 md:mx-0">
                 <x-image-carousel :slides="$slides" />
+                <p class="sr-only">
+                    Afbeelding ontworpen door <a href="https://www.freepik.com/author/benzoix" target="_blank" rel="noopener noreferrer">wayhomestudio</a> op <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer">Freepik</a>.
+                </p>
+                <p class="sr-only">
+                    Afbeelding ontworpen door <a href="https://www.freepik.com/wayhomestudio" target="_blank" rel="noopener noreferrer">benzoix</a> op <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer">Freepik</a>.
+                </p>
             </div>
 
             <!-- Details -->
@@ -45,7 +51,7 @@
 
                     <!-- Report Button -->
                     <x-buttons :buttons="[
-                        ['text' => 'Rapporteer', 'url' => '#', 'bgColor' => 'bg-zinc-500', 'opacity' => 'opacity-50', 'accessible' => true ]
+                        ['text' => 'Rapporteer', 'url' => '#', 'bgColor' => 'bg-gray-400', 'opacity' => 'opacity-50', 'accessible' => true ]
                     ]" />
                 </div>
             </div>
