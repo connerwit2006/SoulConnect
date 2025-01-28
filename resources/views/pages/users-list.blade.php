@@ -15,17 +15,17 @@
                 <div class="divide-y divide-gray-300"> <!-- Removed extra whitespace by adding divide-y -->
                     <!-- Container for each user -->
                     @foreach ($users as $user)
-                        <div class="flex flex-col sm:flex-row sm:items-center bg-bg2 p-3 space-y-2 sm:space-y-0 sm:space-x-4"> <!-- Adjusted for responsive stacking -->
+                        <div class="flex flex-col md:flex-row md:items-center bg-bg2 p-3 space-y-2 md:space-y-0 md:space-x-4"> <!-- Adjusted for better stacking at all breakpoints -->
                             <!-- Name -->
-                            <div class="flex-1 text-sm text-gray-900">
+                            <div class="flex-1 text-sm text-gray-900 truncate">
                                 {{ $user->name }}
                             </div>
                             <!-- Email -->
-                            <div class="flex-1 text-sm text-gray-900">
+                            <div class="flex-1 text-sm text-gray-900 truncate">
                                 {{ $user->email }}
                             </div>
                             <!-- Created At -->
-                            <div class="flex-1 text-sm text-gray-900">
+                            <div class="flex-1 text-sm text-gray-900 truncate">
                                 {{ $user->created_at }}
                             </div>
 
