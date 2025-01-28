@@ -1,9 +1,9 @@
 <x-app-layout>
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold mb-6 text-center">Matches</h1>
+        <h1 class="text-gray-700 text-3xl font-bold mb-6 text-center">Matches</h1>
 
         @if ($matches->isEmpty())
-            <p class="text-center text-gray-500">No matches found.</p>
+            <p class="text-center text-gray-700">No matches found.</p>
         @else
             <div class="overflow-x-auto shadow-lg rounded-lg">
                 <table class="table-auto w-full bg-white rounded-lg border border-gray-200">

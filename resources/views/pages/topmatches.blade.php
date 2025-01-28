@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container mx-auto px-4 py-8">
         <!-- Page Title -->
-        <h1 class="text-3xl font-bold mb-6 text-center">Dagelijkste top 5 matches</h1>
+        <h1 class="text-gray-700 text-3xl font-bold mb-6 text-center">Dagelijkste top 5 matches</h1>
 
         @if ($matches->isEmpty())
             <p class="text-center text-gray-500">Geen matches gevonden.</p>

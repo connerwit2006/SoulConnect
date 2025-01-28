@@ -23,7 +23,7 @@
         </template>
 
         <!-- Prev/Next Arrows -->
-        <div class="absolute top-0 left-0 w-full h-full z-50 pointer-events-none">
+        <div class="absolute top-0 left-0 w-full h-full z-40 pointer-events-none">
             <!-- Previous Button -->
             <button
                 class="absolute bg-gray-400 text-white md:hover:bg-accent font-bold md:hover:shadow-lg rounded-full w-12 h-12 sm:w-14 sm:h-14 z-50"

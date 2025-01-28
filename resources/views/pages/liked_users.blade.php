@@ -1,9 +1,9 @@
 <x-app-layout>
     <div class="container mx-auto px-4 py-8">
-        <h2 class="text-3xl font-bold mb-6 text-center">Gebruikers die je leuk vindt</h2>
+        <h2 class="text-gray-700 text-3xl font-bold mb-6 text-center">Gebruikers die je leuk vindt</h2>
 
         @if ($likedUsers->isEmpty())
-            <p class="text-center text-gray-500">Je hebt nog niemand geliked!</p>
+            <p class="text-center text-gray-700">Je hebt nog niemand geliked!</p>
         @else
             <div class="overflow-x-auto shadow-lg rounded-lg">
                 <table class="table-auto w-full bg-white rounded-lg border border-gray-200">

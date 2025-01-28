@@ -30,4 +30,10 @@
             ['id' => 10, 'name' => 'Lucas Visser', 'img' => 'https://randomuser.me/api/portraits/men/10.jpg']
         ]"
     />
+
+{{--    <!-- Potential Matches Showcase -->--}}
+{{--    <x-peopleShowcase--}}
+{{--        title="Potentiële Matches!"--}}
+{{--        :people="$people"--}}
+{{--    />--}}
 </x-app-layout>
