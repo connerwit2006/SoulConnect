@@ -86,7 +86,6 @@
                     const result = await response.json();
 
                     if (result.success) {
-                        alert('User ignored successfully!');
                         this.closest('tr').remove();
                     } else {
                         alert('Something went wrong: ' + result.message);

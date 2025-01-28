@@ -46,8 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/mutual-likes', [LikeController::class, 'mutualLikes'])->name('mutual.likes');
 
     //match system routes
-    Route::get('/matches', [MatchingController::class, 'findMatches']);
-    Route::get('/topmatches', [MatchingController::class, 'findTopMatches']);
+    Route::get('/matches', [MatchingController::class, 'findMatches'])->name('matches.index');
+    Route::get('/topmatches', [MatchingController::class, 'findTopMatches'])->name('topmatches.index');
 
     //payment system routes 
     Route::get('/payment', [PaymentController::class, 'showPaymentPage'])->name('payment.page');
