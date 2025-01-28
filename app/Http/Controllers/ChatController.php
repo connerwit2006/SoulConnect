@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
-    // Display the chat page
+    // Display chat page
     public function showChat($receiverId)
     {
         $user = Auth::user();

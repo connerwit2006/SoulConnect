@@ -17,7 +17,7 @@ class LikeController extends Controller
     //fetch users and display them to pages/profiles.blade.php
     public function index(Request $request)
     {
-        $userId = Auth::id(); // fetch logged in user ID
+        $userId = Auth::id();
 
         //fetch users that the logged in user hasn't interacted with, sort by the matchingcontroller calculation function
         $profiles = User::where('id', '!=', $userId)
@@ -28,7 +28,6 @@ class LikeController extends Controller
             })
             ->get()
             ->sortByDesc(function ($profile) use ($userId) {
-                //return users sorted by match score using the findMatches function from the MatchingController
                 return (new MatchingController)->calculateMatchScore(User::find($userId), $profile);
             });
 

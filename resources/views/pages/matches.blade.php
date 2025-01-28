@@ -3,11 +3,11 @@
         <h1 class="text-gray-700 text-3xl font-bold mb-6 text-center">Matches</h1>
 
         @if ($matches->isEmpty())
-            <p class="text-center text-gray-700">No matches found.</p>
+        <p class="text-center text-gray-700">No matches found.</p>
         @else
-            <div class="overflow-x-auto shadow-lg rounded-lg">
-                <table class="table-auto w-full bg-white rounded-lg border border-gray-200">
-                    <thead class="bg-gray-100 text-gray-600 text-sm uppercase">
+        <div class="overflow-x-auto shadow-lg rounded-lg">
+            <table class="table-auto w-full bg-white rounded-lg border border-gray-200">
+                <thead class="bg-gray-100 text-gray-600 text-sm uppercase">
                     <tr>
                         <th class="px-6 py-4 text-left">Profiel foto</th>
                         <th class="px-6 py-4 text-left">Bijnaam</th>
@@ -15,44 +15,51 @@
                         <th class="px-6 py-4 text-center">Match Score</th>
                         <th class="px-6 py-4 text-center">Acties</th>
                     </tr>
-                    </thead>
-                    <tbody class="text-gray-700 text-sm">
+                </thead>
+                <tbody class="text-gray-700 text-sm">
                     @foreach ($matches as $match)
-                        <tr class="border-t hover:bg-gray-50 transition">
-                            <td class="px-6 py-4">
+                    <tr class="border-t hover:bg-gray-50 transition">
+                        <td class="px-6 py-4">
+                            <a href="/detail/{{ $match['id'] }}">
                                 <img src="image/Detail1.jpg" alt="Profile Picture"
                                     class="w-12 h-12 rounded-full object-cover border border-gray-300">
-                            </td>
-                            <td class="px-6 py-4">{{ $match['nickname'] }}</td>
-                            <td class="px-6 py-4">{{ $match['oneliner'] }}</td>
-                            <td class="px-6 py-4 text-center font-semibold text-accent">{{ $match['score'] }}</td>
-                            <td class="px-6 py-4 text-center">
-                                @if ($match['liked'])
-                                    <button class="bg-accent text-white font-medium py-2 px-4 rounded-lg cursor-not-allowed">
-                                        Liked
-                                    </button>
-                                @else
-                                    <button class="bg-gray-300 hover:bg-accent text-white font-medium py-2 px-4 rounded-lg like-btn transition"
-                                        data-user-id="{{ $match['id'] }}">
-                                        Like
-                                    </button>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+                            </a>
+                        </td>
+                        <td class="px-6 py-4">
+                            <a href="/detail/{{ $match['id'] }}" class="hover:underline text-accent">
+                                {{ $match['nickname'] }}
+                            </a>
+                        </td>
 
-            {{-- Pagination Links --}}
-            <div class="flex justify-center mt-6 space-x-2">
-                @for ($i = 1; $i <= $totalPages; $i++)
-                    <a href="?page={{ $i }}"
-                        class="px-4 py-2 rounded-lg border {{ $i == request()->get('page', 1) ? 'bg-accent text-white' : 'bg-white text-gray-700 hover:bg-accent' }}">
-                        {{ $i }}
-                    </a>
+                        <td class="px-6 py-4">{{ $match['oneliner'] }}</td>
+                        <td class="px-6 py-4 text-center font-semibold text-accent">{{ $match['score'] }}</td>
+                        <td class="px-6 py-4 text-center">
+                            @if ($match['liked'])
+                            <button class="bg-accent text-white font-medium py-2 px-4 rounded-lg cursor-not-allowed">
+                                Liked
+                            </button>
+                            @else
+                            <button class="bg-gray-300 hover:bg-accent text-white font-medium py-2 px-4 rounded-lg like-btn transition"
+                                data-user-id="{{ $match['id'] }}">
+                                Like
+                            </button>
+                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        {{-- Pagination Links --}}
+        <div class="flex justify-center mt-6 space-x-2">
+            @for ($i = 1; $i <= $totalPages; $i++)
+                <a href="?page={{ $i }}"
+                class="px-4 py-2 rounded-lg border {{ $i == request()->get('page', 1) ? 'bg-accent text-white' : 'bg-white text-gray-700 hover:bg-accent' }}">
+                {{ $i }}
+                </a>
                 @endfor
-            </div>
+        </div>
         @endif
     </div>
 
@@ -63,16 +70,16 @@
 
                 // Send the like request
                 fetch("{{ route('like.interact') }}", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    },
-                    body: JSON.stringify({
-                        liked_user_id: userId,
-                        action: 'like',
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({
+                            liked_user_id: userId,
+                            action: 'like',
+                        })
                     })
-                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
